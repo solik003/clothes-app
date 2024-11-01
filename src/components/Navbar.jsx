@@ -8,6 +8,7 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div`
+    padding: 10px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -33,7 +34,7 @@ const Language = styled.div`
     cursor: pointer;
 `
 const SearchContainer = styled.div`
-    border: 1px solid lightgray;
+    border: 0.5px solid lightgray;
     display: flex;
     align-items: center;
     margin-left: 25px;
@@ -46,7 +47,7 @@ const Logo = styled.h1`
     font-weight: bold;
 `
 const MenuItem = styled.div`
-    font-size: 12px;
+    font-size: 14px;
     cursor: pointer;
     margin-left: 25px;
 `
