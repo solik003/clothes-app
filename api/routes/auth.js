@@ -32,4 +32,21 @@ router.post("/register", async (req, res) => {
       res.status(500).json({ message: "Server error. Please try again." });
   }
 });
+
+// LOGIN
+router.post("/login", async (req, res) => {
+  try {
+      const user = await User.findOne({ username: req.body.username });
+      if (!user) return res.status(401).json("Wrong Username");
+
+      const validPassword = await bcrypt.compare(req.body.password, user.password);
+      if (!validPassword) return res.status(401).json("Wrong Password");
+
+      // Remove sensitive data from response
+      const { password, ...others } = user._doc;
+      res.status(200).json(others);
+  } catch (err) {
+      res.status(500).json(err);
+  }
+});
 module.exports = router;
