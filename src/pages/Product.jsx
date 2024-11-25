@@ -1,9 +1,12 @@
-import React from 'react'
+
+import React, { useEffect, useState } from 'react'
 import Navbar from "../components/Navbar";
 import Announcement from "../components/Announcement";
 import styled from "styled-components";
 import { Add, Remove } from "@mui/icons-material";
 import { mobile } from "../responsive";
+import { publicRequest } from '../requestMethods';
+import { useLocation } from 'react-router-dom';
 
 const Container = styled.div``;
 
@@ -107,41 +110,68 @@ const Button  = styled.button`
 `
 
 const Product = () => {
+  const location = useLocation();
+  const id = location.pathname.split("/")[2];
+  const [product, setProduct] = useState({});
+  const [quantity, setQuantity] = useState(1);
+  const [color, setColor] = useState('');
+  const [size, setSize] = useState('');
+
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const res = await publicRequest.get("/products/find/" + id);
+        setProduct(res.data);
+        console.log(res.data);
+
+      } catch {
+        
+      }
+    }
+    getProduct();
+
+  },[id]);
+
+  const handleQuantity = (type) => {
+    if(type === 'dec'){
+      quantity > 1 && setQuantity(quantity - 1);
+    } else {
+      setQuantity(quantity + 1);
+    }
+  }
   return (
     <Container>
         <Navbar />
         <Announcement />
         <Wrapper>
             <ImgContainer>
-                <Image src="https://i.ibb.co/S6qMxwr/jean.jpg" />
+                <Image src={product.img} />
             </ImgContainer>
             <InfoContainer>
-                <Title>Denim Jumpsuit</Title>
-                <Desc>Our denim jumpsuit combines effortless style with all-day comfort, making it a perfect choice for any occasion. Crafted from high-quality denim, it features a relaxed yet flattering fit with a cinched waist to define your silhouette. Whether paired with sneakers for a casual day out or dressed up with heels and accessories for a night out, this jumpsuit adapts to every mood and setting. Elevate your wardrobe with a piece that blends timeless appeal with modern flair.</Desc>
-                <Price>$ 20</Price>
+                <Title>{product.title}</Title>
+                <Desc>{product.desc}</Desc>
+                <Price>$ {product.price}</Price>
                 <FilterContainer>
                     <Filter>
                         <FilterTitle>Color</FilterTitle>
-                        <FilterColor color="black" />
-                        <FilterColor color="darkblue" />
-                        <FilterColor color="gray" />
+                        {product.color?.map((c) => (
+                          <FilterColor color={c} key={c} onClick={() => setColor(c)} />
+                        ))}
                     </Filter>
                     <Filter>
                         <FilterTitle>Size</FilterTitle>
-                        <FilterSize>
-                            <FilterSizeOption>XS</FilterSizeOption>
-                            <FilterSizeOption>S</FilterSizeOption>
-                            <FilterSizeOption>M</FilterSizeOption>
-                            <FilterSizeOption>L</FilterSizeOption>
-                            <FilterSizeOption>XL</FilterSizeOption>
+                        <FilterSize onChange={(e) => setSize(e.target.value)}>
+                          {product.size?.map((s) => (
+                            <FilterSizeOption key={s}>{s}</FilterSizeOption>
+                          ))}
                         </FilterSize>
                     </Filter>
                 </FilterContainer>
                 <AddContainer>
                     <AmountContainer>
-                        <Remove />
-                        <Amount>1</Amount>
-                        <Add />
+                        <Remove onClick={() => handleQuantity('dec')}/>
+                        <Amount>{quantity}</Amount>
+                        <Add onClick={() => handleQuantity('inc')} />
                     </AmountContainer>
                     <Button>ADD TO CART</Button>
                 </AddContainer>
