@@ -1,7 +1,8 @@
 import { FavoriteBorderOutlined, SearchOutlined, ShoppingCartOutlined } from '@mui/icons-material';
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 
 const Info = styled.div`
   opacity: 0;
@@ -65,6 +66,10 @@ const Icon = styled.div`
 `;
 
 const Product = ({item}) => {
+  const location = useLocation();
+
+
+  
     return (
         <Container>
           <Circle />
