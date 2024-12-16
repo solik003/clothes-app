@@ -31,7 +31,6 @@ export const TopButton = styled.button`
     color: ${(props) => props.type === "filled" && "white"};
 `
 export const TopText = styled.span`
-    text-decoration: underline;
     cursor: pointer;
     margin: 0px 10px;
 `
@@ -63,7 +62,7 @@ export const ProductDetail = styled.div`
 
 export const Image = styled.img`
   width: 200px;
-  ${mobile({ height: "40vh" })}
+  ${mobile({ height: "30vh" })}
 `;
 
 export const Details = styled.div`
@@ -73,9 +72,13 @@ export const Details = styled.div`
   justify-content: space-around;
 `;
 
-export const ProductName = styled.span``;
+export const ProductName = styled.span`
+  ${mobile({ fontSize: "12px" })}
+`;
 
-export const ProductId = styled.span``;
+export const ProductId = styled.span`
+  ${mobile({ fontSize: "11px" })}
+`;
 
 export const ProductColor = styled.div`
   width: 20px;
@@ -92,6 +95,7 @@ export const PriceDetail = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  ${mobile({ fontSize: "12px", flexDirection: "row" })}
 `;
 
 export const ProductAmountContainer = styled.div`
@@ -107,7 +111,7 @@ export const ProductAmount = styled.div`
 export const ProductPrice = styled.div`
     font-size: 30px;
     font-weight: 200;
-    ${mobile({ marginBottom: "20px" })}
+    ${mobile({ margin: "20px", fontSize: "15px" })}
 `
 export const Hr = styled.hr`
   background-color: #eee;
@@ -136,4 +140,8 @@ export const Button = styled.button`
   background-color: black;
   color: white;
   font-weight: 600;
+`;
+
+export const ProductDeleteContainer = styled.span`
+
 `;

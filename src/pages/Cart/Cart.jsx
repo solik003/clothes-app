@@ -2,8 +2,8 @@ import React, {useState, useEffect} from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 import Announcement from '../../components/Announcement/Announcement'
 import Footer from '../../components/Footer/Footer'
-import { Add, Remove } from "@mui/icons-material";
-import { useSelector } from 'react-redux';
+import { Add, Remove, Delete  } from "@mui/icons-material";
+import { useSelector,useDispatch } from 'react-redux';
 import StripeCheckout from "react-stripe-checkout";
 import { userRequest } from "../../requestMethods";
 import { useNavigate  } from "react-router-dom";
@@ -26,7 +26,8 @@ import {
     ProductColor, 
     ProductSize, 
     PriceDetail, 
-    ProductAmountContainer, 
+    ProductAmountContainer,
+    ProductDeleteContainer, 
     ProductAmount,  
     ProductPrice, 
     Hr, 
@@ -37,6 +38,7 @@ import {
     SummaryItemPrice, 
     Button
 } from './Cart.styles'
+import { removeProduct } from '../../redux/cartRedux';
 
 const KEY = process.env.REACT_APP_STRIPE;
 
@@ -44,6 +46,7 @@ const Cart = () => {
     const cart = useSelector((state) => state.cart);
     const [stripeToken, setStripeToken] = useState(null);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const onToken = (token) => {
         setStripeToken(token);
@@ -61,9 +64,15 @@ const Cart = () => {
           stripeToken && makeRequest();
     },[stripeToken, cart.total, navigate]);
 
+    const handleRemove = (id) => {
+        dispatch(removeProduct(id));
+    };
+
     const handleClick = () => {
         navigate('/');
     }
+
+    const totalItems = cart.products.reduce((total, product) => total + product.quantity, 0);
 
   return (
     <Container>
@@ -74,7 +83,7 @@ const Cart = () => {
             <Top>
                 <TopButton onClick={handleClick}>Continue shopping</TopButton>
                 <TopTexts>
-                    <TopText>Shopping Bag(2)</TopText>
+                    <TopText>Shopping Bag({totalItems})</TopText>
                     <TopText>Your Wishlist (0)</TopText>
                 </TopTexts>
                 <TopButton type="filled">CHECKOUT NOW</TopButton>
@@ -105,6 +114,9 @@ const Cart = () => {
                                     <Remove />
                                 </ProductAmountContainer>
                                 <ProductPrice>$ {product.price * product.quantity}</ProductPrice>
+                                <Delete
+                                    onClick={() => handleRemove(product._id)}
+                                />
                             </PriceDetail>
                         </Product>
                     ))}
