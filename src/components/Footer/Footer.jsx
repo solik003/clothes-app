@@ -29,17 +29,6 @@ const Footer = () => {
         <Left>
             <Logo>Apparel Avenue.</Logo>
             <Desc>Apparel Avenue is an online store dedicated to offering stylish, high-quality clothing that combines comfort with modern fashion trends. Designed for individuals who value both classic and contemporary styles, Apparel Avenue provides a versatile range of apparel for all seasons and occasions. The store showcases a curated selection of clothing items, from everyday essentials to statement pieces, all crafted with premium materials and attention to detail.</Desc>
-            <SocialContainer>
-                <SocialIcon color="E4405F">
-                    <Instagram />
-                </SocialIcon>
-                <SocialIcon color="3B5999">
-                    <Facebook />
-                </SocialIcon>
-                <SocialIcon color="E60023">
-                    <Pinterest />
-                </SocialIcon>
-            </SocialContainer>
         </Left>
         <Center>
             <Title>Useful Links</Title>
@@ -59,16 +48,26 @@ const Footer = () => {
         <Right>
             <Title>Contact</Title>
             <ContactItem>
-            <Room style={{marginRight:"10px"}}/> Ukraine, Lviv
+                <Room style={{marginRight:"10px"}}/> Ukraine, Lviv
             </ContactItem>
             <ContactItem>
-            <Phone style={{marginRight:"10px"}}/> +380 
+                <Phone style={{marginRight:"10px"}}/> +380 
             </ContactItem>
             <ContactItem>
-            <MailOutline style={{marginRight:"10px"}} /> contact@avenue.dev
+                <MailOutline style={{marginRight:"10px"}} /> contact@avenue.dev
             </ContactItem>
+            <SocialContainer>  
+                <SocialIcon color="E4405F">
+                    <Instagram />
+                </SocialIcon>
+                <SocialIcon color="3B5999">
+                    <Facebook />
+                </SocialIcon>
+                <SocialIcon color="E60023">
+                    <Pinterest />
+                </SocialIcon>
+            </SocialContainer>
         </Right>
-        
     </Container>
   )
 }

@@ -84,7 +84,7 @@ const Cart = () => {
                 <TopButton onClick={handleClick}>Continue shopping</TopButton>
                 <TopTexts>
                     <TopText>Shopping Bag({totalItems})</TopText>
-                    <TopText>Your Wishlist (0)</TopText>
+                    <TopText>Your Wishlist ({totalItems})</TopText>
                 </TopTexts>
                 <TopButton type="filled">CHECKOUT NOW</TopButton>
             </Top>

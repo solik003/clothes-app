@@ -48,7 +48,7 @@ export const Input = styled.input`
 `
 export const Logo = styled.h1`
     font-weight: bold;
-    ${mobile({ fontSize: "24px", display: "flex" })}
+    ${mobile({ fontSize: "20px", display: "flex" })}
 `
 export const MenuItem = styled.div`
     font-size: 14px;

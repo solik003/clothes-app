@@ -20,8 +20,8 @@ const Navbar = () => {
             </Left>
             <Center><Logo>Avenue.</Logo></Center>
             <Right>
-                <MenuItem>Register</MenuItem>
-                <MenuItem>Sign In</MenuItem>
+                <Link to="/register"><MenuItem>Register</MenuItem></Link>
+                <Link to="/login"><MenuItem>Sign In</MenuItem></Link>
                 <Link to="/cart">
                     <MenuItem>
                         <Badge badgeContent={quantity} color='primary'>

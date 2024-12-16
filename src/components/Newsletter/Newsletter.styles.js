@@ -12,12 +12,13 @@ export const Container = styled.div`
 export const Title = styled.h1`
     font-size: 50px;
     margin-bottom: 20px;
+    ${mobile({ fontSize: "30px" })}
 `
 export const Desc = styled.div`
     font-size: 24px;
     font-weight: 300;
     margin-bottom: 20px;
-    ${mobile({ textAlign: "center" })}
+    ${mobile({ textAlign: "center", fontSize: "20px"})}
 `
 export const InputContainer = styled.div`
     width: 50%;
