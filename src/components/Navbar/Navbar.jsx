@@ -18,7 +18,7 @@ const Navbar = () => {
                     <Search style={{ color: 'gray', fontSize: 16}}/>
                 </SearchContainer>
             </Left>
-            <Center><Logo>Avenue.</Logo></Center>
+            <Center><Logo>ChillFit.</Logo></Center>
             <Right>
                 <Link to="/register"><MenuItem>Register</MenuItem></Link>
                 <Link to="/login"><MenuItem>Sign In</MenuItem></Link>
