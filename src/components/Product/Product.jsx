@@ -24,9 +24,8 @@ export default function Product({ item }) {
     return null;
   }
   const handleClick = () => {
-    console.log("Adding to favorites:", item);
       dispatch(
-        addFavorite({ ...item, quantity, color, size })
+        addFavorite({ ...item })
       );
   };
 
@@ -86,8 +85,6 @@ export default function Product({ item }) {
           <SearchOutlined />
         </IconButton>
         <IconButton
-          // component={Link}
-          // to="/favorite"
           onClick={handleClick}
         >
           <FavoriteBorderOutlined />

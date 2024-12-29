@@ -18,6 +18,7 @@ const cartSlice = createSlice({
         console.error("Invalid product object:", product);
         return;
       }
+      
 
       const existingProduct = state.products.find(
         (item) => item._id === product._id
@@ -61,24 +62,26 @@ const cartSlice = createSlice({
 
     addFavorite: (state, action) => {
       const product = action.payload;
-     
+    
       if (!product || !product._id) {
         console.error("Invalid product object:", product);
         return;
       }
-
-      const existingProduct = state.favorites.find(
+    
+      if (!Array.isArray(state.favorites)) {
+        state.favorites = [];
+      }
+    
+      const existingFavorite = state.favorites.find(
         (item) => item._id === product._id
       );
-
-      if (existingProduct) {
-        existingProduct.quantity += product.quantity;
-        state.total += product.price * product.quantity;
+    
+      if (existingFavorite) {
+        existingFavorite.quantity += product.quantity || 1;
       } else {
-        state.favorites.push(product);
-        state.favoritesCount += 1;
-        state.total += product.price * product.quantity;
+        state.favorites.push({ ...product, quantity: product.quantity || 1 });
       }
+      state.favoritesCount += product.quantity || 1;
     },
 
     removeFavorite: (state, action) => {
@@ -93,8 +96,9 @@ const cartSlice = createSlice({
       );
 
       if (existingFavorite) {
-        if (existingFavorite.quantity > 1) {
+        if (existingFavorite.favoritesCount > 1) {
           existingFavorite.quantity -= 1;
+          state.favoritesCount -= 1;  
         } else {
           state.favorites = state.favorites.filter(
             (product) => product._id !== productId
@@ -102,7 +106,12 @@ const cartSlice = createSlice({
           state.favoritesCount -= 1;
         }
       }
-    },
+
+      if (state.favorites.length === 0) {
+        state.favoritesCount = 0;
+      }
+
+    }
   },
 });
 

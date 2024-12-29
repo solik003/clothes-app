@@ -8,6 +8,7 @@ import { FavoriteBorderOutlined} from '@mui/icons-material';
 
 export default function Navbar() {
   const quantity = useSelector((state) => state.cart.quantity);
+  const favoriteCount = useSelector((state) => state.cart.favoritesCount);
 
   return (
     <Box
@@ -146,7 +147,7 @@ export default function Navbar() {
             </Badge>
           </Box>
         </Link>
-        <Link to="/cart">
+        <Link to="/favorite">
           <Box
             sx={{
               display: 'flex',
@@ -158,7 +159,7 @@ export default function Navbar() {
               },
             }}
           >
-            <Badge badgeContent={quantity} color="primary">
+            <Badge badgeContent={favoriteCount} color="primary">
               <FavoriteBorderOutlined />
             </Badge>
           </Box>
