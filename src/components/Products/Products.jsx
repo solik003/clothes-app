@@ -3,9 +3,9 @@ import Product from '../Product/Product';
 import { popularProducts } from "../../data";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Container } from './Products.styles';
+import { Box } from "@mui/material";
 
-const Products = ({ cat, filters, sort }) => {
+export default function Products ({ cat, filters, sort }) {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
@@ -53,16 +53,20 @@ const Products = ({ cat, filters, sort }) => {
     }
   }, [sort]);
 
-    return (
-        <Container>
-          {cat
-            ? filteredProducts.map((item) => <Product item={item} key={item.id} />)
-            : products
-                .slice(0, 8)
-                .map((item) => <Product item={item} key={item.id} />)
-          }
-        </Container>
-      );
+  return (
+    <Box
+      sx={{
+        padding: "20px",
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "space-between",
+      }}
+    >
+      {cat
+        ? filteredProducts.map((item) => <Product item={item} key={item.id} />)
+        : products
+            .slice(0, 8)
+            .map((item) => <Product item={item} key={item.id} />)}
+    </Box>
+  );
 }
-
-export default Products
