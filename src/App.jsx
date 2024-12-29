@@ -11,8 +11,8 @@ import Register from "./pages/Register/Register"
 import Login from "./pages/Login/Login";
 import Cart from "./pages/Cart/Cart";
 import Success from "./pages/Success";
+import Favorite from "./pages/Favorite/Favorite";
 import { useSelector } from "react-redux";
-
 
 
 function App() {
@@ -25,6 +25,7 @@ function App() {
         <Route path="/products/:category" element={<ProductList />} />
         <Route path="/product/:id" element={<ProductItem />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/favorite" element={<Favorite />} />
         <Route path="/success" element={<Success />} />
         <Route
           path="/login"
@@ -40,4 +41,3 @@ function App() {
 }
 
 export default App;
-
