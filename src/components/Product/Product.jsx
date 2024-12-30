@@ -10,24 +10,26 @@ import { FavoriteBorderOutlined, SearchOutlined, ShoppingCartOutlined } from '@m
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addFavorite } from '../../redux/cartRedux';
-import { Typography } from '@mui/material';
+import { Typography, Box } from '@mui/material';
 
 export default function Product({ item }) {
   const dispatch = useDispatch();
-  const [product, setProduct] = useState({});
-  const [quantity, setQuantity] = useState(1);
-  const [color, setColor] = useState('');
-  const [size, setSize] = useState('');
 
   if (!item) {
     console.error("Item is undefined");
     return null;
   }
+
   const handleClick = () => {
-      dispatch(
-        addFavorite({ ...item })
-      );
+    dispatch(
+      addFavorite({ ...item })
+    );
   };
+
+  // Calculate sale price if salePercentage exists
+  const salePrice = item.salePercentage 
+    ? (item.price * (1 - item.salePercentage / 100)).toFixed(2)
+    : null;
 
   return (
     <Card sx={{ maxWidth: 345, marginBottom: '20px' }}>
@@ -38,7 +40,6 @@ export default function Product({ item }) {
           </IconButton>
         }
         title={item.title}
-
         sx={{
           '.MuiCardHeader-title': {
             fontSize: '1.2rem',
@@ -50,7 +51,7 @@ export default function Product({ item }) {
       <CardMedia
         component="img"
         height="194"
-        image={item.img}
+        image={item.img[0]}
         alt={item.title}
         sx={{
           maxHeight: '100%',
@@ -58,27 +59,52 @@ export default function Product({ item }) {
           objectFit: 'contain',
         }}
       />
-      <Typography
-        variant="h6"
-        sx={{
-          textAlign: 'center',
-          fontWeight: 'bold',
-          marginTop: 1,
-          color: 'red',  
-        }}
-      >
-        ${item.salePrice} 
-      </Typography>
+      <Box sx={{ textAlign: 'center', marginTop: 1 }}>
+        {salePrice ? (
+          <>
+            <Typography
+              variant="body2"
+              sx={{
+                textDecoration: 'line-through',
+                color: '#888',
+                marginRight: 1,
+              }}
+            >
+              ${item.price}
+            </Typography>
+            <Typography
+              variant="h6"
+              sx={{
+                fontWeight: 'bold',
+                color: 'red',
+                display: 'inline',
+              }}
+            >
+              ${item.salePercentage}
+            </Typography>
+          </>
+        ) : (
+          <Typography
+            variant="h6"
+            sx={{
+              fontWeight: 'bold',
+              color: 'black',
+            }}
+          >
+            ${item.price}
+          </Typography>
+        )}
+      </Box>
       <CardActions disableSpacing>
         <IconButton 
-          aria-label="add to favorites" 
+          aria-label="add to shopping cart" 
           component={Link}
           to="/cart"
-          >
+        >
           <ShoppingCartOutlined />
         </IconButton>
         <IconButton 
-          aria-label="share"
+          aria-label="view details"
           component={Link}
           to={`/product/${item._id}`}
         >
@@ -86,6 +112,7 @@ export default function Product({ item }) {
         </IconButton>
         <IconButton
           onClick={handleClick}
+          aria-label="add to favorites"
         >
           <FavoriteBorderOutlined />
         </IconButton>

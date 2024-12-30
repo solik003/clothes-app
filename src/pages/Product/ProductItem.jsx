@@ -7,7 +7,12 @@ import { publicRequest } from '../../requestMethods';
 import { useLocation } from 'react-router-dom';
 import { addProduct } from '../../redux/cartRedux';
 import { useDispatch } from "react-redux";
-import { Card, CardMedia, CardContent, Typography, CardActions, Button, Select, MenuItem, IconButton, Box } from '@mui/material';
+import { Card, CardContent, Typography, CardActions, Button, Select, MenuItem, IconButton, Box } from '@mui/material';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 
 export default function Product() {
   const location = useLocation();
@@ -48,17 +53,28 @@ export default function Product() {
     <Box>
       <Navbar />
       <Announcement />
-      <Card sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, padding: '20px',border: '1px solid #ccc' }}>
-        {/* Image Section */}
-        <CardMedia
-          component="img"
-          sx={{ width: { xs: '100%', md: '50%' }, objectFit: 'contain', height: '400px' }}
-          image={product.img}
-          alt={product.title}
-        />
-
-        {/* Info Section */}
-        <Box sx={{  flex: 1 }}>
+      <Card sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, padding: '20px', border: '1px solid #ccc' }}>
+        <Box sx={{ width: { xs: '100%', md: '50%' }, paddingRight: '20px' }}>
+          <Swiper
+            modules={[Navigation, Pagination, Autoplay]}
+            navigation
+            pagination={{ clickable: true }}
+            autoplay={{ delay: 3000 }}
+            loop
+            style={{ height: '400px' }}
+          >
+            {product.img?.map((image, index) => (
+              <SwiperSlide key={index}>
+                <img
+                  src={image}
+                  alt={`${product.title} image ${index + 1}`}
+                  style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </Box>
+        <Box sx={{ flex: 1 }}>
           <CardContent>
             <Typography variant="h4" component="div" sx={{ fontWeight: 'bold' }}>
               {product.title}
@@ -71,19 +87,19 @@ export default function Product() {
             </Typography>
             <Typography variant="h6">Color</Typography>
             <Box sx={{ display: 'flex' }}>
-                {product.color?.map((c) => (
-                  <IconButton
-                    key={c}
-                    sx={{
-                      backgroundColor: c,
-                      width: '30px',
-                      height: '30px',
-                      borderRadius: '50%',
-                      marginRight: '10px',
-                    }}
-                    onClick={() => setColor(c)}
-                  />
-                ))}
+              {product.color?.map((c) => (
+                <IconButton
+                  key={c}
+                  sx={{
+                    backgroundColor: c,
+                    width: '30px',
+                    height: '30px',
+                    borderRadius: '50%',
+                    marginRight: '10px',
+                  }}
+                  onClick={() => setColor(c)}
+                />
+              ))}
             </Box>
             <Typography variant="h6">Size</Typography>
             <Box>
@@ -99,9 +115,7 @@ export default function Product() {
               </Select>
             </Box>
           </CardContent>
-
-          <CardActions sx={{ display: 'flex', flexDirection: 'column',alignItems: 'flex-start' }}>
-            {/* Quantity Section */}
+          <CardActions sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
               <IconButton onClick={() => handleQuantity('dec')}>
                 <Remove />
@@ -111,8 +125,6 @@ export default function Product() {
                 <Add />
               </IconButton>
             </Box>
-
-            {/* Add to Cart Button */}
             <Button
               variant="contained"
               fullWidth
@@ -136,4 +148,4 @@ export default function Product() {
       </Card>
     </Box>
   );
-};
+}
