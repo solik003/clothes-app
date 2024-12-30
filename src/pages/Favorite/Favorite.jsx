@@ -53,35 +53,55 @@ export default function Favorite() {
                                     No products in your wishlist
                                 </Typography>
                             ) : (
-                                favorites.map((product) => (
-                                    <Stack key={product._id} direction="row" spacing={2} alignItems="center" justifyContent="space-between">
-                                        <Box display="flex" flex={2}>
-                                            <Box
-                                                component="img"
-                                                src={product.img}
-                                                alt={product.title}
-                                                sx={{ width: 200, height: 'auto' }}
-                                            />
-                                            <Box ml={2}>
-                                                <Typography>
-                                                    <b>{product.title}</b>
-                                                </Typography>
-                                                <Typography>
-                                                    <b>Color:</b> {product.color}
-                                                </Typography>
-                                                <Typography>
-                                                    <b>Size:</b> {product.size}
-                                                </Typography>
+                                favorites.map((product) => {
+                                    const salePrice = product.salePercentage
+                                        ? (product.price * (1 - product.salePercentage / 100)).toFixed(2)
+                                        : null;
+
+                                    return (
+                                        <Stack key={product._id} direction="row" spacing={2} alignItems="center" justifyContent="space-between">
+                                            <Box display="flex" flex={2}>
+                                                <Box
+                                                    component="img"
+                                                    src={product.img[0]}
+                                                    alt={product.title}
+                                                    sx={{ width: 200, height: 'auto' }}
+                                                />
+                                                <Box ml={2}>
+                                                    <Typography>
+                                                        <b>{product.title}</b>
+                                                    </Typography>
+                                                    <Typography>
+                                                        <b>Color:</b> {product.color}
+                                                    </Typography>
+                                                    <Typography>
+                                                        <b>Size:</b> {product.size}
+                                                    </Typography>
+                                                </Box>
                                             </Box>
-                                        </Box>
-                                        <Box flex={1} textAlign="center">
-                                            <Typography variant="h6">$ {product.price}</Typography>
-                                        </Box>
-                                        <IconButton onClick={() => handleRemove(product._id)}>
-                                            <Delete />
-                                        </IconButton>
-                                    </Stack>
-                                ))
+                                            <Box flex={1} textAlign="center">
+                                                {salePrice ? (
+                                                    <>
+                                                        <Typography variant="h6" color="text.secondary" sx={{ textDecoration: 'line-through' }}>
+                                                            $ {product.price}
+                                                        </Typography>
+                                                        <Typography variant="h6" color="primary">
+                                                            $ {salePrice}
+                                                        </Typography>
+                                                        <Typography variant="body2" color="error" fontWeight="bold" mt={1}>
+                                                            Sale! {product.salePercentage}% Off
+                                                        </Typography>
+                                                    </>
+                                                ) : (
+                                                    <Typography variant="h6">$ {product.price}</Typography>
+                                                )}
+                                            </Box>
+                                            <IconButton onClick={() => handleRemove(product._id)}>
+                                                <Delete />
+                                            </IconButton>
+                                        </Stack>
+                                    );
+                                })
                             )}
                         </Stack>
                     </Grid>

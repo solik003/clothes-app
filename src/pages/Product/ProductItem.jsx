@@ -49,6 +49,10 @@ export default function Product() {
     );
   };
 
+  const salePrice = product.salePercentage 
+    ? (product.price * (1 - product.salePercentage / 100)).toFixed(2)
+    : null;
+
   return (
     <Box>
       <Navbar />
@@ -82,9 +86,37 @@ export default function Product() {
             <Typography variant="body1" sx={{ margin: '20px 0' }}>
               {product.desc}
             </Typography>
-            <Typography variant="h5" sx={{ fontWeight: '100' }}>
-              $ {product.price}
-            </Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              {salePrice ? (
+                <>
+                  <Typography variant="h6" sx={{ textDecoration: 'line-through', color: '#888', marginRight: 1 }}>
+                    ${product.price}
+                  </Typography>
+                  <Typography variant="h5" sx={{ fontWeight: 'bold', color: 'teal', fontSize: '1.5rem' }}>
+                    ${salePrice}
+                  </Typography>
+                  <Box 
+                    sx={{
+                      backgroundColor: 'red',
+                      color: 'white',
+                      borderRadius: '20px',
+                      padding: '5px 12px',
+                      marginLeft: 2,
+                      fontSize: '1.1rem',
+                      fontWeight: 'bold',
+                      display: 'flex',
+                      alignItems: 'center',
+                    }}
+                  >
+                    {product.salePercentage}% OFF
+                  </Box>
+                </>
+              ) : (
+                <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
+                  ${product.price}
+                </Typography>
+              )}
+            </Box>
             <Typography variant="h6">Color</Typography>
             <Box sx={{ display: 'flex' }}>
               {product.color?.map((c) => (

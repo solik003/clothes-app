@@ -26,10 +26,6 @@ export default function Product({ item }) {
     );
   };
 
-  // Calculate sale price if salePercentage exists
-  const salePrice = item.salePercentage 
-    ? (item.price * (1 - item.salePercentage / 100)).toFixed(2)
-    : null;
 
   return (
     <Card sx={{ maxWidth: 345, marginBottom: '20px' }}>
@@ -60,7 +56,7 @@ export default function Product({ item }) {
         }}
       />
       <Box sx={{ textAlign: 'center', marginTop: 1 }}>
-        {salePrice ? (
+        {item.salePercentage ? (
           <>
             <Typography
               variant="body2"
@@ -80,7 +76,7 @@ export default function Product({ item }) {
                 display: 'inline',
               }}
             >
-              ${item.salePercentage}
+              {item.salePercentage}% OFF
             </Typography>
           </>
         ) : (

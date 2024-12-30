@@ -13,13 +13,12 @@ import { Box, Button, Typography, Stack, Divider, Grid, IconButton } from '@mui/
 
 const KEY = process.env.REACT_APP_STRIPE;
 
-export default function Cart () {
+export default function Cart() {
     const cart = useSelector((state) => state.cart);
     const [stripeToken, setStripeToken] = useState(null);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     
-
     const onToken = (token) => {
         setStripeToken(token);
     };
@@ -32,7 +31,9 @@ export default function Cart () {
                     amount: 500,
                 });
                 navigate('/success', { data: res.data });
-            } catch {}
+            } catch (err) {
+                console.error("Payment error:", err);
+            }
         };
         stripeToken && makeRequest();
     }, [stripeToken, cart.total, navigate]);
@@ -45,7 +46,17 @@ export default function Cart () {
         navigate('/');
     };
 
+    const calculateTotal = () => {
+        return cart.products.reduce((total, product) => {
+            const salePrice = product.salePercentage 
+                ? product.price * (1 - product.salePercentage / 100)
+                : product.price;
+            return total + salePrice * product.quantity;
+        }, 0);
+    };
+
     const totalItems = cart.products.reduce((total, product) => total + product.quantity, 0);
+    const totalWithDiscount = calculateTotal();
 
     return (
         <Box>
@@ -70,44 +81,57 @@ export default function Cart () {
                 <Grid container spacing={2} mt={3}>
                     <Grid item xs={12} md={8}>
                         <Stack spacing={3} divider={<Divider flexItem />}>
-                            {cart.products.map((product) => (
-                                <Stack key={product._id} direction="row" spacing={2} alignItems="center" justifyContent="space-between">
-                                    <Box display="flex" flex={2}>
-                                        <Box
-                                            component="img"
-                                            src={product.img}
-                                            alt={product.title}
-                                            sx={{ width: 200, height: 'auto' }}
-                                        />
-                                        <Box ml={2}>
-                                            <Typography>
-                                                <b>{product.title}</b>
-                                            </Typography>
-                                            <Typography>
-                                                <b>Color:</b> {product.color}
-                                            </Typography>
-                                            <Typography>
-                                                <b>Size:</b> {product.size}
-                                            </Typography>
+                            {cart.products.map((product) => {
+                                const salePrice = product.salePercentage 
+                                    ? (product.price * (1 - product.salePercentage / 100)).toFixed(2)
+                                    : null;
+
+                                return (
+                                    <Stack key={product._id} direction="row" spacing={2} alignItems="center" justifyContent="space-between">
+                                        <Box display="flex" flex={2}>
+                                            <Box
+                                                component="img"
+                                                src={product.img[0]}
+                                                alt={product.title}
+                                                sx={{ width: 200, height: 'auto' }}
+                                            />
+                                            <Box ml={2}>
+                                                <Typography>
+                                                    <b>{product.title}</b>
+                                                </Typography>
+                                                <Typography>
+                                                    <b>Color:</b> {product.color}
+                                                </Typography>
+                                                <Typography>
+                                                    <b>Size:</b> {product.size}
+                                                </Typography>
+                                            </Box>
                                         </Box>
-                                    </Box>
-                                    <Box flex={1} textAlign="center">
-                                        <Stack direction="row" alignItems="center" justifyContent="center" spacing={1}>
-                                            <IconButton>
-                                                <Add />
-                                            </IconButton>
-                                            <Typography>{product.quantity}</Typography>
-                                            <IconButton>
-                                                <Remove />
-                                            </IconButton>
-                                        </Stack>
-                                        <Typography variant="h6">$ {product.price * product.quantity}</Typography>
-                                    </Box>
-                                    <IconButton onClick={() => handleRemove(product._id)}>
-                                        <Delete />
-                                    </IconButton>
-                                </Stack>
-                            ))}
+                                        <Box flex={1} textAlign="center">
+                                            <Stack direction="row" alignItems="center" justifyContent="center" spacing={1}>
+                                                <IconButton>
+                                                    <Add />
+                                                </IconButton>
+                                                <Typography>{product.quantity}</Typography>
+                                                <IconButton>
+                                                    <Remove />
+                                                </IconButton>
+                                            </Stack>
+                                            {salePrice ? (
+                                                <Stack direction="row" justifyContent="center" spacing={1}>
+                                                    <Typography variant="h6" sx={{ textDecoration: 'line-through' }}>${product.price * product.quantity}</Typography>
+                                                    <Typography variant="h6" color="teal">${salePrice * product.quantity}</Typography>
+                                                </Stack>
+                                            ) : (
+                                                <Typography variant="h6">${product.price * product.quantity}</Typography>
+                                            )}
+                                        </Box>
+                                        <IconButton onClick={() => handleRemove(product._id)}>
+                                            <Delete />
+                                        </IconButton>
+                                    </Stack>
+                                );
+                            })}
                         </Stack>
                     </Grid>
                     <Grid item xs={12} md={4}>
@@ -118,7 +142,7 @@ export default function Cart () {
                             <Stack spacing={2}>
                                 <Stack direction="row" justifyContent="space-between">
                                     <Typography>Subtotal</Typography>
-                                    <Typography>$ {cart.total}</Typography>
+                                    <Typography>${totalWithDiscount.toFixed(2)}</Typography>
                                 </Stack>
                                 <Stack direction="row" justifyContent="space-between">
                                     <Typography>Estimated Shipping</Typography>
@@ -130,15 +154,15 @@ export default function Cart () {
                                 </Stack>
                                 <Stack direction="row" justifyContent="space-between" fontWeight="500" fontSize="1.2rem">
                                     <Typography>Total</Typography>
-                                    <Typography>$ {cart.total}</Typography>
+                                    <Typography>${(totalWithDiscount + 5.90 - 5).toFixed(2)}</Typography>
                                 </Stack>
                             </Stack>
                             <StripeCheckout
                                 name="Avenue."
                                 billingAddress
                                 shippingAddress
-                                description={`Your total is $${cart.total}`}
-                                amount={cart.total * 100}
+                                description={`Your total is $${totalWithDiscount.toFixed(2)}`}
+                                amount={totalWithDiscount * 100}
                                 token={onToken}
                                 stripeKey={KEY}
                             >
@@ -154,3 +178,4 @@ export default function Cart () {
         </Box>
     );
 };
+
