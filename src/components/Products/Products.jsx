@@ -1,40 +1,40 @@
-import React from 'react'
-import Product from '../Product/Product';
-import { popularProducts } from "../../data";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { Box } from "@mui/material";
 
-export default function Products ({ cat, filters, sort }) {
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Product from "../Product/Product";
+import { Box, Button } from "@mui/material";
+
+export default function Products({ cat, filters, sort }) {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-
-
+  const [limit, setLimit] = useState(8);
+  
   useEffect(() => {
     const getProducts = async () => {
       try {
         const res = await axios.get(
           cat
-            ? `http://localhost:5000/api/products?category=${cat}`
-            : "http://localhost:5000/api/products"
+            ? `http://localhost:5000/api/products?category=${cat}&limit=${limit}`
+            : `http://localhost:5000/api/products?limit=${limit}`
         );
-        console.log(res);
-        console.log(cat);
         setProducts(res.data);
-      } catch (err) {}
+      } catch (err) {
+        console.error(err);
+      }
     };
     getProducts();
-  }, [cat]);
+  }, [cat, limit]);
 
   useEffect(() => {
-    cat &&
+    if (cat) {
       setFilteredProducts(
         products.filter((item) =>
-          Object.entries(filters).every(([key, value]) =>
-            item[key].includes(value)
-          )
+          Object.entries(filters).every(([key, value]) => item[key].includes(value))
         )
       );
+    } else {
+      setFilteredProducts(products);
+    }
   }, [products, cat, filters]);
 
   useEffect(() => {
@@ -53,6 +53,10 @@ export default function Products ({ cat, filters, sort }) {
     }
   }, [sort]);
 
+  const handleLoadMore = () => {
+    setLimit((prevLimit) => prevLimit + 8);
+  };
+
   return (
     <Box
       sx={{
@@ -65,8 +69,16 @@ export default function Products ({ cat, filters, sort }) {
       {cat
         ? filteredProducts.map((item) => <Product item={item} key={item.id} />)
         : products
-            .slice(0, 8)
+            .slice(0, limit)
             .map((item) => <Product item={item} key={item.id} />)}
+
+      <Button
+        onClick={handleLoadMore}
+        variant="contained"
+        sx={{ width: "100%", marginTop: "20px" }}
+      >
+        Load More
+      </Button>
     </Box>
   );
 }
