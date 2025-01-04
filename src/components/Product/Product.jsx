@@ -6,7 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import CardActions from '@mui/material/CardActions';
 import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { FavoriteBorderOutlined, SearchOutlined, ShoppingCartOutlined } from '@mui/icons-material';
+import { FavoriteBorderOutlined, SearchOutlined, ShoppingCartOutlined, Favorite } from '@mui/icons-material';
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addFavorite } from '../../redux/cartRedux';
@@ -14,6 +14,7 @@ import { Typography, Box } from '@mui/material';
 
 export default function Product({ item }) {
   const dispatch = useDispatch();
+  const [isFavorited, setIsFavorited] = useState(false);
 
   if (!item) {
     console.error("Item is undefined");
@@ -21,6 +22,7 @@ export default function Product({ item }) {
   }
 
   const handleClick = () => {
+    setIsFavorited((prev) => !prev);
     dispatch(
       addFavorite({ ...item })
     );
@@ -35,6 +37,9 @@ export default function Product({ item }) {
             <MoreVertIcon />
           </IconButton>
         }
+        titleTypographyProps={{
+          noWrap: true
+        }}
         title={item.title}
         sx={{
           '.MuiCardHeader-title': {
@@ -47,7 +52,7 @@ export default function Product({ item }) {
       <CardMedia
         component="img"
         height="194"
-        image={item.img[0]}
+        image={item.img?.[0]}
         alt={item.title}
         sx={{
           maxHeight: '100%',
@@ -110,7 +115,11 @@ export default function Product({ item }) {
           onClick={handleClick}
           aria-label="add to favorites"
         >
-          <FavoriteBorderOutlined />
+          {isFavorited ? (
+            <Favorite sx={{ color: 'teal' }} />
+          ) : (
+            <FavoriteBorderOutlined />
+          )}
         </IconButton>
       </CardActions>
     </Card>
