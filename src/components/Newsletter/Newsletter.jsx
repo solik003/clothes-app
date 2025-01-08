@@ -1,46 +1,45 @@
 
 import React from 'react';
 import { Send } from '@mui/icons-material';
-import { Box, Typography, TextField, Button } from '@mui/material';
+import { Typography, TextField, Button, Stack } from '@mui/material';
 
-export default function Newsletter () {
+export function Newsletter () {
   return (
-    <Box
+    <Stack
+      gap={2}
+      direction='column'
       sx={{
         height: '60vh',
         backgroundColor: '#fcf5f5',
-        display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        flexDirection: 'column',
-        padding: '20px',
       }}
     >
       <Typography
         variant="h4"
+        gutterBottom
+        align='center'
         sx={{
-          fontSize: { xs: '30px', sm: '50px' },
-          marginBottom: '20px',
-          textAlign: 'center',
+          fontSize: { xs: 30, sm: 50 },
         }}
       >
         Stay in touch with Us!
       </Typography>
       <Typography
         variant="body1"
+        gutterBottom
         sx={{
-          fontSize: { xs: '20px', sm: '24px' },
+          fontSize: { xs: 20, sm: 24 },
           fontWeight: 300,
-          marginBottom: '20px',
           textAlign: { xs: 'center', sm: 'left' },
         }}
       >
         Get timely updates from your favorite products.
       </Typography>
-      <Box
+      <Stack
+        direction='row'
         sx={{
           width: { xs: '80%', sm: '50%' },
-          display: 'flex',
           alignItems: 'center',
           border: '1px solid lightgray',
           backgroundColor: 'white',
@@ -51,17 +50,15 @@ export default function Newsletter () {
           placeholder="Your email"
           sx={{
             flex: 8,
-            border: 'none',
-            paddingLeft: '20px',
+            pl: 2,
             '& fieldset': { border: 'none' },
           }}
         />
         <Button
           variant="contained"
+          color='primary'
           sx={{
             flex: 1,
-            backgroundColor: 'teal',
-            color: 'white',
             height: '100%',
             borderRadius: 0,
             '&:hover': { backgroundColor: 'darkslategray' },
@@ -69,7 +66,7 @@ export default function Newsletter () {
         >
           <Send />
         </Button>
-      </Box>
-    </Box>
+      </Stack>
+    </Stack>
   );
 };

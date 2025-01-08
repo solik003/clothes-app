@@ -1,8 +1,8 @@
 
 import React from 'react';
-import Navbar from '../../components/Navbar/Navbar';
-import Announcement from '../../components/Announcement/Announcement';
-import Footer from '../../components/Footer/Footer';
+import { Navbar } from '../../components/Navbar/Navbar';
+import { Announcement } from '../../components/Announcement/Announcement';
+import { Footer } from '../../components/Footer/Footer';
 import { Delete } from '@mui/icons-material';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeFavorite } from '../../redux/cartRedux';

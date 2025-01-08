@@ -1,15 +1,17 @@
 
 import React, { useState, useEffect } from 'react';
-import Navbar from '../../components/Navbar/Navbar';
-import Announcement from '../../components/Announcement/Announcement';
-import Footer from '../../components/Footer/Footer';
+import { Navbar } from '../../components/Navbar/Navbar';
+import { Announcement } from '../../components/Announcement/Announcement';
+import { Footer } from '../../components/Footer/Footer';
 import { Add, Remove, Delete } from '@mui/icons-material';
 import { useSelector, useDispatch } from 'react-redux';
 import StripeCheckout from 'react-stripe-checkout';
 import { userRequest } from '../../requestMethods';
 import { useNavigate } from 'react-router-dom';
 import { removeProduct } from '../../redux/cartRedux';
-import { Box, Button, Typography, Stack, Divider, Grid, IconButton } from '@mui/material';
+import { Box, Button, Typography, Stack, Divider,Grid, IconButton } from '@mui/material';
+// import Grid from '@mui/material/Unstable_Grid2';
+import Grid2 from '@mui/material/Grid2';
 
 const KEY = process.env.REACT_APP_STRIPE;
 
@@ -166,7 +168,7 @@ export default function Cart() {
                                 token={onToken}
                                 stripeKey={KEY}
                             >
-                                <Button variant="contained" color="primary" fullWidth sx={{ mt: 2, backgroundColor: 'teal' }}>
+                                <Button variant="contained" color="primary" fullWidth sx={{ mt: 2}}>
                                     CHECKOUT NOW
                                 </Button>
                             </StripeCheckout>

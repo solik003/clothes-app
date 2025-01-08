@@ -2,18 +2,18 @@
 import React from 'react';
 import CategoryItem from '../CategoryItem/CategoryItem';
 import { categories } from "../../data";
-import { Box } from '@mui/material';
+import { Stack } from '@mui/material';
 
-export default function Categories () {
+export function Categories () {
   return (
-    <Box
+    <Stack
+      direction='row'
       sx={{
-        display: 'flex',
-        padding: '20px',
+        p: 2,
         justifyContent: 'space-between',
         flexWrap: 'wrap',
         '@media (max-width: 600px)': {
-          padding: '0px',
+          p: 0,
           flexDirection: 'column',
         },
       }}
@@ -21,6 +21,6 @@ export default function Categories () {
       {categories.map((item) => (
         <CategoryItem item={item} key={item.id} />
       ))}
-    </Box>
+    </Stack>
   );
 };

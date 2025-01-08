@@ -1,10 +1,10 @@
 
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Product from "../Product/Product";
-import { Box, Button } from "@mui/material";
+import { Product } from "../Product/Product";
+import { Button, Stack } from "@mui/material";
 
-export default function Products({ cat, filters, sort }) {
+export function Products({ cat, filters, sort }) {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [limit, setLimit] = useState(8);
@@ -58,10 +58,10 @@ export default function Products({ cat, filters, sort }) {
   };
 
   return (
-    <Box
+    <Stack
+      direction='row'
       sx={{
         padding: "20px",
-        display: "flex",
         flexWrap: "wrap",
         justifyContent: "space-between",
       }}
@@ -75,10 +75,12 @@ export default function Products({ cat, filters, sort }) {
       <Button
         onClick={handleLoadMore}
         variant="contained"
-        sx={{ width: "100%", marginTop: "20px" }}
+        fullWidth
+        sx={{ marginTop: "20px" }}
       >
         Load More
       </Button>
-    </Box>
+    </Stack>
   );
 }
+

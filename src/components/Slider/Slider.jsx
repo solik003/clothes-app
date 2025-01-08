@@ -15,7 +15,7 @@ import {
 } from './Slider.styles'
 
 
-const Slider = () => {
+export function Slider () {
     const [slideIndex, setSlideIndex] = useState(0);
     const handleClick = (direction) => {
     if (direction === "left") {
@@ -51,5 +51,3 @@ const Slider = () => {
     </Container>
   )
 }
-
-export default Slider

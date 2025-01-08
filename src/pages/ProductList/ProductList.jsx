@@ -1,14 +1,14 @@
-import Announcement from '../../components/Announcement/Announcement';
-import Navbar from "../../components/Navbar/Navbar";
+import { Announcement } from '../../components/Announcement/Announcement';
+import { Navbar } from "../../components/Navbar/Navbar";
 import React from 'react';
-import Products from "../../components/Products/Products";
-import Newsletter from "../../components/Newsletter/Newsletter";
-import Footer from "../../components/Footer/Footer";
+import { Products } from "../../components/Products/Products";
+import { Newsletter } from "../../components/Newsletter/Newsletter";
+import { Footer } from "../../components/Footer/Footer";
 import { useLocation } from "react-router";
 import { useState } from "react";
 import { Container, Title, FilterContainer, Filter, FilterText,  Select, Option } from "./ProductList.styles"
 
-const ProductList = () => {
+export function ProductList () {
   const location = useLocation();
   const cat = location.pathname.split("/")[2];
   const [filters, setFilters] = useState({});
@@ -65,5 +65,3 @@ const ProductList = () => {
     </Container>
   );
 };
-
-export default ProductList

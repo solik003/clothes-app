@@ -10,9 +10,9 @@ import { FavoriteBorderOutlined, SearchOutlined, ShoppingCartOutlined, Favorite 
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addFavorite } from '../../redux/cartRedux';
-import { Typography, Box } from '@mui/material';
+import { Typography, Stack } from '@mui/material';
 
-export default function Product({ item }) {
+export function Product({ item }) {
   const dispatch = useDispatch();
   const [isFavorited, setIsFavorited] = useState(false);
 
@@ -41,13 +41,6 @@ export default function Product({ item }) {
           noWrap: true
         }}
         title={item.title}
-        sx={{
-          '.MuiCardHeader-title': {
-            fontSize: '1.2rem',
-            fontWeight: 600,
-            color: '#333',
-          }
-        }}
       />
       <CardMedia
         component="img"
@@ -55,48 +48,43 @@ export default function Product({ item }) {
         image={item.img?.[0]}
         alt={item.title}
         sx={{
-          maxHeight: '100%',
-          maxWidth: '100%',
           objectFit: 'contain',
         }}
       />
-      <Box sx={{ textAlign: 'center', marginTop: 1 }}>
+      <Stack textAlign={'center'}>
         {item.salePercentage ? (
           <>
             <Typography
-              variant="body2"
+              variant="h6"
+              component="div"
+              color='secondary'
               sx={{
                 textDecoration: 'line-through',
-                color: '#888',
-                marginRight: 1,
               }}
             >
               ${item.price}
             </Typography>
             <Typography
-              variant="h6"
-              sx={{
-                fontWeight: 'bold',
-                color: 'red',
-                display: 'inline',
-              }}
+              variant="h5"
+              component="span"
+              color="error"
             >
               {item.salePercentage}% OFF
             </Typography>
           </>
         ) : (
           <Typography
-            variant="h6"
-            sx={{
-              fontWeight: 'bold',
-              color: 'black',
-            }}
+            variant="h5"
+            component="span"
           >
             ${item.price}
           </Typography>
         )}
-      </Box>
-      <CardActions disableSpacing>
+      </Stack>
+      <CardActions disableSpacing={true} sx={{
+          display: 'flex',
+          justifyContent: 'space-between', // Distribute icons evenly across the bottom
+      }}>
         <IconButton 
           aria-label="add to shopping cart" 
           component={Link}
@@ -116,7 +104,7 @@ export default function Product({ item }) {
           aria-label="add to favorites"
         >
           {isFavorited ? (
-            <Favorite sx={{ color: 'teal' }} />
+            <Favorite color='primary' />
           ) : (
             <FavoriteBorderOutlined />
           )}

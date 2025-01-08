@@ -5,14 +5,15 @@ import {
   Navigate 
 } from "react-router-dom";
 import Home from './pages/Home';
-import ProductList from "./pages/ProductList/ProductList";
-import ProductItem from "./pages/Product/ProductItem";
+import { ProductList } from "./pages/ProductList/ProductList";
+import { ProductItem } from "./pages/Product/ProductItem";
 import Register from "./pages/Register/Register"
-import Login from "./pages/Login/Login";
+import { Login } from "./pages/Login/Login";
 import Cart from "./pages/Cart/Cart";
 import Success from "./pages/Success";
 import Favorite from "./pages/Favorite/Favorite";
 import { useSelector } from "react-redux";
+import FilteredProducts from "./pages/FilteredProducts/FilteredProducts";
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/favorite" element={<Favorite />} />
         <Route path="/success" element={<Success />} />
+        <Route path="/search" element={<FilteredProducts />} />
         <Route
           path="/login"
           element={user ? <Navigate to="/" /> : <Login />}

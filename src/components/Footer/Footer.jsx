@@ -8,67 +8,63 @@ import {
   Pinterest,
   Room,
 } from '@mui/icons-material';
-import { Box, Typography, List, ListItem, IconButton } from '@mui/material';
+import { Box, Typography, List, ListItem, IconButton, Stack } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const usefulLinks = [
-    'Home',
-    'Cart',
-    'Man Fashion',
-    'Woman Fashion',
-    'Accessories',
-    'My Account',
-    'Order Tracking',
-    'Wishlist',
-    'Terms',
+  { name: 'Home', path: '/' },
+  { name: 'Cart', path: '/cart' },
+  { name: 'Man Fashion', path: '/products/man' },
+  { name: 'Woman Fashion', path: '/products/woman' },
+  { name: 'My Account', path: '/login' },
+  { name: 'Wishlist', path: '/favorite' },
+  { name: 'Terms', path: '/terms' },
 ];
 
-export default function Footer () {
+export function Footer() {
   return (
-    <Box
+    <Stack
+    spacing={2}
       sx={{
-        display: 'flex',
         flexDirection: { xs: 'column', sm: 'row' },
-        padding: '20px',
         backgroundColor: '#f5f5f5',
-        color: 'black'
       }}
     >
       {/* Left Section */}
-      <Box
+      <Stack
+        direction="column"
         sx={{
           flex: 2,
-          display: 'flex',
-          flexDirection: 'column',
-          padding: '20px',
+          p: 2,
         }}
       >
-        <Typography variant="h4" sx={{ fontWeight: 'bold', marginBottom: '20px' }}>
+        <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold'}}>
           ChillFit.
         </Typography>
-        <Typography variant="body2" sx={{ marginBottom: '20px' }}>
+        <Typography variant="body2" gutterBottom>
           ChillFit is an online store dedicated to offering stylish, high-quality
           clothing that combines comfort with modern fashion trends. Designed for
           individuals who value both classic and contemporary styles, ChillFit
           provides a versatile range of apparel for all seasons and occasions.
         </Typography>
-      </Box>
+      </Stack>
 
       {/* Center Section */}
-      <Box
+      <Stack
         sx={{
           flex: 3,
-          padding: '20px',
+          p: 2,
           display: { xs: 'none', sm: 'block' },
         }}
       >
-        <Typography variant="h6" sx={{ marginBottom: '30px' }}>
+        <Typography variant="h6" gutterBottom >
           Useful Links
         </Typography>
         <List
+          disablePadding
           sx={{
             display: 'flex',
             flexWrap: 'wrap',
-            padding: 0,
             margin: 0,
             listStyle: 'none',
           }}
@@ -76,57 +72,69 @@ export default function Footer () {
           {usefulLinks.map((item, index) => (
             <ListItem
               key={index}
-              sx={{ width: '50%', marginBottom: '10px', padding: 0 }}
+              disablePadding
+              sx={{ width: '50%', mb: 1}}
             >
-              <Typography variant="body2">{item}</Typography>
+              <Link to={item.path} style={{ textDecoration: 'none', color: 'inherit' }}>
+                <Typography variant="body2">{item.name}</Typography>
+              </Link>
             </ListItem>
           ))}
         </List>
-      </Box>
+      </Stack>
 
       {/* Right Section */}
       <Box
         sx={{
           flex: 1,
-          padding: '20px',
+          p: 2,
           backgroundColor: { xs: '#fff8f8', sm: 'transparent' },
         }}
       >
-        <Typography variant="h6" sx={{ marginBottom: '20px' }}>
+        <Typography variant="h6" gutterBottom >
           Contact
         </Typography>
-        <Box
-          sx={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}
+        <Stack
+          direction="row" 
+          gap={2}
+          mb={2}
+          sx={{ alignItems: 'center'}}
         >
-          <Room sx={{ marginRight: '10px' }} />
+          <Room />
           <Typography variant="body2">Ukraine, Lviv</Typography>
-        </Box>
-        <Box
-          sx={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}
+        </Stack>
+        <Stack
+          direction="row" 
+          gap={2}
+          mb={2}
+          sx={{ alignItems: 'center'}}
         >
-          <Phone sx={{ marginRight: '10px' }} />
+          <Phone />
           <Typography variant="body2">+380</Typography>
-        </Box>
-        <Box
-          sx={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}
-        >
-          <MailOutline sx={{ marginRight: '10px' }} />
-          <Typography variant="body2">contact@avenue.dev</Typography>
-        </Box>
+        </Stack>
+        <Stack
+          direction="row"
+          gap={2}
+          mb={2}
 
-        <Box sx={{ display: 'flex', gap: '10px' }}>
-          <IconButton sx={{ color: '#E4405F', borderRadius: '50%' }}>
+          sx={{ alignItems: 'center' }}
+        >
+          <MailOutline />
+          <Typography variant="body2">contact@avenue.dev</Typography>
+        </Stack>
+
+        <Stack direction='row'>
+          <IconButton sx={{ color: '#E4405F' }}>
             <Instagram />
           </IconButton>
-          <IconButton sx={{ color: '#3B5999', borderRadius: '50%' }}>
+          <IconButton sx={{ color: '#3B5999'}}>
             <Facebook />
           </IconButton>
-          <IconButton sx={{ color: '#E60023', borderRadius: '50%' }}>
+          <IconButton sx={{ color: '#E60023'}}>
             <Pinterest />
           </IconButton>
-        </Box>
+        </Stack>
       </Box>
-    </Box>
+    </Stack>
   );
-};
-
+}

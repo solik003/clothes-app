@@ -1,20 +1,20 @@
 
 import React, { useEffect, useState } from 'react';
-import Navbar from "../../components/Navbar/Navbar";
-import Announcement from "../../components/Announcement/Announcement";
+import {Navbar} from "../../components/Navbar/Navbar";
+import { Announcement } from "../../components/Announcement/Announcement";
 import { Add, Remove } from "@mui/icons-material";
 import { publicRequest } from '../../requestMethods';
 import { useLocation } from 'react-router-dom';
 import { addProduct } from '../../redux/cartRedux';
 import { useDispatch } from "react-redux";
-import { Card, CardContent, Typography, CardActions, Button, Select, MenuItem, IconButton, Box } from '@mui/material';
+import { Card, CardContent, Typography, CardActions, Button, Select, MenuItem, IconButton, Box, Stack } from '@mui/material';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 
-export default function Product() {
+export function ProductItem() {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
   const [product, setProduct] = useState({});
@@ -54,11 +54,12 @@ export default function Product() {
     : null;
 
   return (
-    <Box>
-      <Navbar />
+    <Stack direction='column'>
       <Announcement />
-      <Card sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, padding: '20px', border: '1px solid #ccc' }}>
-        <Box sx={{ width: { xs: '100%', md: '50%' }, paddingRight: '20px' }}>
+      <Navbar />
+      
+      <Card sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, p: 2, border: '1px solid #ccc' }}>
+        <Box sx={{ width: { xs: '100%', md: '50%' }, pr: 2 }}>
           <Swiper
             modules={[Navigation, Pagination, Autoplay]}
             navigation
@@ -69,10 +70,15 @@ export default function Product() {
           >
             {product.img?.map((image, index) => (
               <SwiperSlide key={index}>
-                <img
+                <Box
+                  component="img"
                   src={image}
                   alt={`${product.title} image ${index + 1}`}
-                  style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                  sx={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'contain',
+                  }}
                 />
               </SwiperSlide>
             ))}
@@ -89,27 +95,27 @@ export default function Product() {
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
               {salePrice ? (
                 <>
-                  <Typography variant="h6" sx={{ textDecoration: 'line-through', color: '#888', marginRight: 1 }}>
+                  <Typography variant="h6" sx={{ textDecoration: 'line-through', color: 'text.secondary', mr: 1 }}>
                     ${product.price}
                   </Typography>
-                  <Typography variant="h5" sx={{ fontWeight: 'bold', color: 'teal', fontSize: '1.5rem' }}>
+                  <Typography variant="h5" sx={{ fontWeight: 'bold', color: 'primary.main', fontSize: '1.5rem' }}>
                     ${salePrice}
                   </Typography>
-                  <Box 
+                  <Stack 
                     sx={{
                       backgroundColor: 'red',
                       color: 'white',
-                      borderRadius: '20px',
-                      padding: '5px 12px',
-                      marginLeft: 2,
+                      borderRadius: 2,
+                      px: 2, 
+                      py: 1,
+                      ml: 2,
                       fontSize: '1.1rem',
                       fontWeight: 'bold',
-                      display: 'flex',
                       alignItems: 'center',
                     }}
                   >
                     {product.salePercentage}% OFF
-                  </Box>
+                  </Stack>
                 </>
               ) : (
                 <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
@@ -118,21 +124,21 @@ export default function Product() {
               )}
             </Box>
             <Typography variant="h6">Color</Typography>
-            <Box sx={{ display: 'flex' }}>
+            <Stack>
               {product.color?.map((c) => (
                 <IconButton
                   key={c}
                   sx={{
                     backgroundColor: c,
-                    width: '30px',
-                    height: '30px',
+                    width: 30,
+                    height: 30,
                     borderRadius: '50%',
-                    marginRight: '10px',
+                    mr: 1,
                   }}
                   onClick={() => setColor(c)}
                 />
               ))}
-            </Box>
+            </Stack>
             <Typography variant="h6">Size</Typography>
             <Box>
               <Select
@@ -148,21 +154,22 @@ export default function Product() {
             </Box>
           </CardContent>
           <CardActions sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
+            <Stack direction='row' gap={1} sx={{ alignItems: 'center'}}>
               <IconButton onClick={() => handleQuantity('dec')}>
                 <Remove />
               </IconButton>
-              <Typography sx={{ margin: '0 10px' }}>{quantity}</Typography>
+              <Typography mx={1}>{quantity}</Typography>
               <IconButton onClick={() => handleQuantity('inc')}>
                 <Add />
               </IconButton>
-            </Box>
+            </Stack>
             <Button
               variant="contained"
               fullWidth
               onClick={handleClick}
               sx={{
-                border: '2px solid teal',
+                border: 2,
+                borderColor: 'teal',
                 backgroundColor: 'white',
                 cursor: 'pointer',
                 color: 'black',
@@ -178,6 +185,6 @@ export default function Product() {
           </CardActions>
         </Box>
       </Card>
-    </Box>
+    </Stack>
   );
 }
