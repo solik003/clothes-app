@@ -1,22 +1,22 @@
 
 import React from 'react';
-import { Box } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 
 export default function Announcement () {
   return (
-    <Box
-      sx={{
-        height: '30px',
-        backgroundColor: 'teal',
-        color: 'white',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontSize: '14px',
-        fontWeight: 500,
-      }}
+    <Stack
+      alignItems="center"
+      justifyContent="center"
+      height={30}
+      bgcolor="teal"
     >
-      Super Deal! Free Shipping on Orders Over $50
-    </Box>
+      <Typography
+        variant="body2"
+        component="span"
+        color="white"
+      >
+        Super Deal! Free Shipping on Orders Over $50
+      </Typography>
+    </Stack>
   );
 };
