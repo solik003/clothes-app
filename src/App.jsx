@@ -14,6 +14,7 @@ import Success from "./pages/Success";
 import Favorite from "./pages/Favorite/Favorite";
 import { useSelector } from "react-redux";
 import FilteredProducts from "./pages/FilteredProducts/FilteredProducts";
+import { Terms } from "./pages/Terms/Terms";
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         <Route path="/favorite" element={<Favorite />} />
         <Route path="/success" element={<Success />} />
         <Route path="/search" element={<FilteredProducts />} />
+        <Route path="/terms" element={<Terms />} />
         <Route
           path="/login"
           element={user ? <Navigate to="/" /> : <Login />}
