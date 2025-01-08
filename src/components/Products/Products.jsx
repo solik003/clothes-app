@@ -2,24 +2,27 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Product } from "../Product/Product";
-import { Button, Stack } from "@mui/material";
+import { Button, Stack, Skeleton } from "@mui/material";
 
 export function Products({ cat, filters, sort }) {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [limit, setLimit] = useState(8);
-  
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const getProducts = async () => {
       try {
+        setLoading(true);
         const res = await axios.get(
           cat
             ? `http://localhost:5000/api/products?category=${cat}&limit=${limit}`
             : `http://localhost:5000/api/products?limit=${limit}`
         );
         setProducts(res.data);
+        setLoading(false); 
       } catch (err) {
-        console.error(err);
+        setLoading(false);
       }
     };
     getProducts();
@@ -59,28 +62,31 @@ export function Products({ cat, filters, sort }) {
 
   return (
     <Stack
-      direction='row'
+      direction="row"
       sx={{
-        padding: "20px",
+        p: 2,
         flexWrap: "wrap",
         justifyContent: "space-between",
       }}
     >
-      {cat
-        ? filteredProducts.map((item) => <Product item={item} key={item.id} />)
-        : products
-            .slice(0, limit)
-            .map((item) => <Product item={item} key={item.id} />)}
+      {loading ? (
+        Array.from({ length: limit }).map((_, index) => (
+          <Skeleton key={index} variant="rectangular" width={340} height={400} sx={{ margin: 1 }} />
+        ))
+      ) : cat ? (
+        filteredProducts.map((item) => <Product item={item} key={item.id} />)
+      ) : (
+        products.slice(0, limit).map((item) => <Product item={item} key={item.id} />)
+      )}
 
       <Button
         onClick={handleLoadMore}
         variant="contained"
         fullWidth
-        sx={{ marginTop: "20px" }}
+        sx={{ mt: 2 }}
       >
         Load More
       </Button>
     </Stack>
   );
 }
-
