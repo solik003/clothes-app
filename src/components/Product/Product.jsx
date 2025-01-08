@@ -9,7 +9,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { FavoriteBorderOutlined, SearchOutlined, ShoppingCartOutlined, Favorite } from '@mui/icons-material';
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addFavorite } from '../../redux/cartRedux';
+import { addFavorite, removeFavorite } from '../../redux/cartRedux';
 import { Typography, Stack } from '@mui/material';
 
 export function Product({ item }) {
@@ -22,10 +22,12 @@ export function Product({ item }) {
   }
 
   const handleClick = () => {
-    setIsFavorited((prev) => !prev);
-    dispatch(
-      addFavorite({ ...item })
-    );
+    if (isFavorited) {
+      dispatch(removeFavorite(item._id));
+    } else {
+      dispatch(addFavorite(item));
+    }
+    setIsFavorited(!isFavorited);
   };
 
 
