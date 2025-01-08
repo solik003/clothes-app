@@ -3,9 +3,9 @@ import React from 'react';
 import { Navbar } from '../../components/Navbar/Navbar';
 import { Announcement } from '../../components/Announcement/Announcement';
 import { Footer } from '../../components/Footer/Footer';
-import { Delete } from '@mui/icons-material';
+import { Delete, ShoppingCart  } from '@mui/icons-material';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeFavorite } from '../../redux/cartRedux';
+import { removeFavorite, addProduct } from '../../redux/cartRedux';
 import { Box, Button, Typography, Stack, Divider, Grid, IconButton } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,6 +16,16 @@ export default function Favorite() {
 
     const handleRemove = (id) => {
         dispatch(removeFavorite(id)); 
+    };
+
+    const handleAddToCart = (product) => {
+        const { title, price, img, color, size } = product;
+        const quantity = 1; 
+        if (color && size) {
+            dispatch(addProduct({ ...product, quantity, color, size }));
+        } else {
+            console.log("Color or size is missing!");
+        }
     };
 
     const totalItems = favorites.reduce((total, product) => total + product.quantity, 0);
@@ -96,9 +106,14 @@ export default function Favorite() {
                                                     <Typography variant="h6">$ {product.price}</Typography>
                                                 )}
                                             </Box>
-                                            <IconButton onClick={() => handleRemove(product._id)}>
-                                                <Delete />
+                                            <Box display="flex" alignItems="center">
+                                            <IconButton onClick={() => handleAddToCart(product)} sx={{ marginRight: 2 }}>
+                                                <ShoppingCart />
                                             </IconButton>
+                                                <IconButton onClick={() => handleRemove(product._id)}>
+                                                    <Delete />
+                                                </IconButton>
+                                            </Box>
                                         </Stack>
                                     );
                                 })
