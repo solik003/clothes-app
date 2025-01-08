@@ -30,7 +30,7 @@ export function Product({ item }) {
 
 
   return (
-    <Card sx={{ maxWidth: 345, marginBottom: '20px' }}>
+    <Card sx={{ width: 340, height: 400, mb: 2, display: 'flex', flexDirection: 'column' }}>
       <CardHeader
         action={
           <IconButton aria-label="settings">
@@ -44,14 +44,14 @@ export function Product({ item }) {
       />
       <CardMedia
         component="img"
-        height="194"
+        height="220"
         image={item.img?.[0]}
         alt={item.title}
         sx={{
           objectFit: 'contain',
         }}
       />
-      <Stack textAlign={'center'}>
+      <Stack textAlign={'center'} sx={{ flexGrow: 1 }}>
         {item.salePercentage ? (
           <>
             <Typography
@@ -81,10 +81,13 @@ export function Product({ item }) {
           </Typography>
         )}
       </Stack>
-      <CardActions disableSpacing={true} sx={{
+      <CardActions
+        disableSpacing={true}
+        sx={{
           display: 'flex',
-          justifyContent: 'space-between', // Distribute icons evenly across the bottom
-      }}>
+          justifyContent: 'space-between',
+        }}
+      >
         <IconButton 
           aria-label="add to shopping cart" 
           component={Link}
