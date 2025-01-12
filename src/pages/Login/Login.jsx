@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { login } from "../../redux/apiCalls";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Button, TextField, Typography, Link } from "@mui/material";
+import { Box, Button, TextField, Typography, Link, Stack } from "@mui/material";
 
-export default function Login () {
+export function Login () {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
@@ -14,18 +14,17 @@ export default function Login () {
     login(dispatch, { username, password });
   };
   return (
-    <Box
+    <Stack
       sx={{
         width: '100vw',
         height: '100vh',
         background: `linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url("https://images.pexels.com/photos/6984661/pexels-photo-6984661.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940") center`,
         backgroundSize: 'cover',
-        display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
       }}
     >
-      <Box
+      <Stack
         sx={{
           width: '25%',
           padding: '20px',
@@ -38,7 +37,7 @@ export default function Login () {
         <Typography variant="h4" sx={{ fontWeight: 300, fontSize: '24px' }}>
           Sign in
         </Typography>
-        <Box sx={{ display: 'flex', flexDirection: 'column', marginTop: 2 }}>
+        <Stack direction='column' sx={{ marginTop: 2 }}>
           <TextField
             label="Username"
             variant="outlined"
@@ -65,7 +64,7 @@ export default function Login () {
             Login
           </Button>
           {error && (
-            <Typography sx={{ color: 'red', fontSize: '14px', marginTop: 1 }}>
+            <Typography color='error' sx={{ fontSize: '14px', marginTop: 1 }}>
               Something went wrong...
             </Typography>
           )}
@@ -75,8 +74,8 @@ export default function Login () {
           <Link href="#" variant="body2">
             Create a new account
           </Link>
-        </Box>
-      </Box>
-    </Box>
+        </Stack>
+      </Stack>
+    </Stack>
   );
 }
