@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Product } from "../Product/Product";
 import { Button, Stack, Skeleton } from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
+import { setLoading, setProducts, setFilteredProducts, setError } from "../../redux/productsRedux";
 
 export function Products({ cat, filters, sort }) {
   const [products, setProducts] = useState([]);
@@ -14,17 +16,21 @@ export function Products({ cat, filters, sort }) {
     const getProducts = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(
-          cat
-            ? `http://localhost:5000/api/products?category=${cat}&limit=${limit}`
-            : `http://localhost:5000/api/products?limit=${limit}`
-        );
+
+        let url = `http://localhost:5000/api/products?limit=${limit}`;
+
+        if (cat) {
+          url += `&category=${cat}`;
+        }
+
+        const res = await axios.get(url);
         setProducts(res.data);
-        setLoading(false); 
+        setLoading(false);
       } catch (err) {
         setLoading(false);
       }
     };
+
     getProducts();
   }, [cat, limit]);
 
@@ -74,19 +80,21 @@ export function Products({ cat, filters, sort }) {
           <Skeleton key={index} variant="rectangular" width={340} height={400} sx={{ margin: 1 }} />
         ))
       ) : cat ? (
-        filteredProducts.map((item) => <Product item={item} key={item.id} />)
+        filteredProducts.slice(0, limit).map((item) => <Product item={item} key={item.id} />)
       ) : (
         products.slice(0, limit).map((item) => <Product item={item} key={item.id} />)
       )}
 
-      <Button
-        onClick={handleLoadMore}
-        variant="contained"
-        fullWidth
-        sx={{ mt: 2 }}
-      >
-        Load More
-      </Button>
+      {cat && (
+        <Button
+          onClick={handleLoadMore}
+          variant="contained"
+          fullWidth
+          sx={{ mt: 2 }}
+        >
+          Load More
+        </Button>
+      )}
     </Stack>
   );
 }
