@@ -26,20 +26,44 @@ export const sliderItems = [
     {
       id: 1,
       img: "https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      title: "SHIRT STYLE!",
-      cat:"woman"
+      title: "Woman",
+      cat:"woman",
+      isTop: true,
     },
     {
       id: 2,
       img: "https://images.pexels.com/photos/2983464/pexels-photo-2983464.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      title: "LOUNGEWEAR LOVE",
-      cat:"coat"
+      title: "Coats for Every Season",
+      cat:"coat",
+      isTop: true,
     },
     {
       id: 3,
       img: "https://images.pexels.com/photos/5480696/pexels-photo-5480696.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
-      title: "LIGHT JACKETS",
-      cat:"jeans"
+      title: "Classic Denim",
+      cat:"jeans",
+      isTop: false,
+    },
+    {
+      id: 4,
+      img: "https://images.pexels.com/photos/5480696/pexels-photo-5480696.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+      title: "Man",
+      cat:"man",
+      isTop: false,
+    },
+    {
+      id: 5,
+      img: "https://images.pexels.com/photos/5480696/pexels-photo-5480696.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+      title: "Elegant Dresses",
+      cat:"dress",
+      isTop: false,
+    },
+    {
+      id: 6,
+      img: "https://images.pexels.com/photos/5480696/pexels-photo-5480696.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+      title: "T-Shirts",
+      cat:"tshirt",
+      isTop: true,
     },
   ];
   
