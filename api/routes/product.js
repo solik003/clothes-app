@@ -1,5 +1,6 @@
-const router = require('express').Router();
 const express = require("express");
+const router = express.Router();
+
 const { verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin } = require('./verifyToken');
 const Product = require("../models/Product");
 
@@ -52,29 +53,32 @@ router.get("/find/:id", async (req, res) => {
 });
 
 //GET ALL PRODUCTS
+
 router.get("/", async (req, res) => {
-    const qNew = req.query.new;
-    const qCategory = req.query.category;
-    try {
-      let products;
-  
-      if (qNew) {
-        products = await Product.find().sort({ createdAt: -1 }).limit(1);
-      } else if (qCategory) {
-        products = await Product.find({
-          categories: {
-            $in: [qCategory],
-          },
-        });
-      } else {
-        products = await Product.find();
-      }
-  
-      res.status(200).json(products);
-    } catch (err) {
-      res.status(500).json(err);
+  const { title, category, search } = req.query;
+
+  try {
+    let query = {};
+
+    if (search) {
+      query.title = { $regex: search, $options: "i" }; 
     }
+
+    
+    if (category) {
+      query.categories = { $in: [category] };
+    }
+
+    if (title) {
+      query.title = { $regex: title, $options: "i" };
+    }
+
+    const products = await Product.find(query);
+
+    res.status(200).json(products);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
-  
 
 module.exports = router;
