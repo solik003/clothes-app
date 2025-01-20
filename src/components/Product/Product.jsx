@@ -6,13 +6,13 @@ import CardMedia from '@mui/material/CardMedia';
 import CardActions from '@mui/material/CardActions';
 import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { FavoriteBorderOutlined, SearchOutlined, ShoppingCartOutlined, Favorite } from '@mui/icons-material';
+import { FavoriteBorderOutlined, SearchOutlined, ShoppingCartOutlined, Favorite, DeleteOutline } from '@mui/icons-material';
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addFavorite, removeFavorite } from '../../redux/cartRedux';
+import { addFavorite, removeFavorite, removeProduct } from '../../redux/cartRedux';
 import { Typography, Stack } from '@mui/material';
 
-export function Product({ item }) {
+export function Product({ item, isFavoritePage }) {
   const dispatch = useDispatch();
   const [isFavorited, setIsFavorited] = useState(false);
 
@@ -28,6 +28,14 @@ export function Product({ item }) {
       dispatch(addFavorite(item));
     }
     setIsFavorited(!isFavorited);
+  };
+
+  const handleRemoveClick = () => {
+    if (isFavoritePage) {
+      dispatch(removeFavorite(item._id));
+    } else {
+      dispatch(removeProduct(item._id));
+    }
   };
 
 
@@ -90,14 +98,14 @@ export function Product({ item }) {
           justifyContent: 'space-between',
         }}
       >
-        <IconButton 
-          aria-label="add to shopping cart" 
+        <IconButton
+          aria-label="add to shopping cart"
           component={Link}
           to="/cart"
         >
           <ShoppingCartOutlined />
         </IconButton>
-        <IconButton 
+        <IconButton
           aria-label="view details"
           component={Link}
           to={`/product/${item._id}`}
@@ -105,13 +113,17 @@ export function Product({ item }) {
           <SearchOutlined />
         </IconButton>
         <IconButton
-          onClick={handleClick}
-          aria-label="add to favorites"
+          onClick={isFavoritePage ? handleRemoveClick : handleClick}
+          aria-label={isFavoritePage ? "remove from favorites" : "add to favorites"}
         >
-          {isFavorited ? (
-            <Favorite color='primary' />
+          {isFavoritePage ? (
+            <DeleteOutline />
           ) : (
-            <FavoriteBorderOutlined />
+            isFavorited ? (
+              <Favorite color='primary' />
+            ) : (
+              <FavoriteBorderOutlined />
+            )
           )}
         </IconButton>
       </CardActions>
