@@ -3,7 +3,7 @@ import React from 'react';
 import { Send } from '@mui/icons-material';
 import { Typography, TextField, Button, Stack } from '@mui/material';
 
-export function Newsletter () {
+export function Newsletter() {
   return (
     <Stack
       gap={2}
@@ -20,7 +20,7 @@ export function Newsletter () {
         gutterBottom
         align='center'
         sx={{
-          fontSize: { xs: 30, sm: 50 },
+          fontSize: { xs: 28, sm: 48 },
         }}
       >
         Stay in touch with Us!
@@ -29,7 +29,7 @@ export function Newsletter () {
         variant="body1"
         gutterBottom
         sx={{
-          fontSize: { xs: 20, sm: 24 },
+          fontSize: { xs: 18, sm: 22 },
           fontWeight: 300,
           textAlign: { xs: 'center', sm: 'left' },
         }}
