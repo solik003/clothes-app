@@ -4,6 +4,7 @@ import CategoryItem from "../CategoryItem/CategoryItem";
 import { categories } from "../../data";
 import { Stack, Tabs, Tab, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { CategoryTabs } from "../CategoryTabs/CategoryTabs";
 
 export function Categories() {
   const [activeTab, setActiveTab] = useState();
@@ -21,23 +22,15 @@ export function Categories() {
 
   return (
     <Box sx={{ width: "100%", p: 2 }}>
-      <Tabs
-        value={activeTab}
-        onChange={handleTabChange}
-        variant="scrollable"
-        scrollButtons="auto"
-        aria-label="Top Category Tabs"
-        textColor="primary"
-        indicatorColor="primary"
-      >
-        {categories.map((category) => (
-          <Tab key={category.id} label={category.title} />
-        ))}
-      </Tabs>
+      <CategoryTabs
+        categories={categories}
+        activeTab={activeTab}
+        onTabChange={handleTabChange}
+      />
 
       <Stack
         direction={{ xs: "column", sm: "row" }}
-        gap={{xs: 0, sm: 2}}
+        gap={{ xs: 0, sm: 2 }}
         sx={{
           justifyContent: "space-between",
           flexWrap: "wrap",
