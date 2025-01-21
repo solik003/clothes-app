@@ -12,8 +12,6 @@ import { removeProduct } from '../../redux/slices/cartRedux';
 import { Box, Button, Typography, Stack, Divider, Grid, IconButton } from '@mui/material';
 import { getCart } from '../../redux/selectors/cartSelectors';
 
-import Grid2 from '@mui/material/Grid2';
-
 const KEY = process.env.REACT_APP_STRIPE;
 
 export default function Cart() {
@@ -66,20 +64,16 @@ export default function Cart() {
             <Announcement />
             <Navbar />
             <Box p={2}>
-                <Typography variant="h4" textAlign="center" fontWeight="300" gutterBottom>
+                <Typography variant="h5" textAlign="center" fontWeight="300" gutterBottom sx={{ display: { xs: 'none', sm: 'block' } }}>
                     Your bag
                 </Typography>
-                <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent="space-between" alignItems="center" p={2}>
+                <Stack direction={{ xs: 'column', sm: 'row' }} justifyContent="space-between" alignItems="center" p={2} spacing={2}>
                     <Button variant="outlined" onClick={handleClick} size="large">
                         Continue shopping
                     </Button>
                     <Stack direction="row" spacing={2} display={{ xs: 'none', sm: 'flex' }}>
                         <Typography>Shopping Bag ({totalItems})</Typography>
-                        <Typography>Your Wishlist ({totalItems})</Typography>
                     </Stack>
-                    <Button variant="contained" size="large" color="primary" sx={{ backgroundColor: 'teal' }}>
-                        CHECKOUT NOW
-                    </Button>
                 </Stack>
                 <Grid container spacing={2} mt={3}>
                     <Grid item xs={12} md={8}>
@@ -90,48 +84,96 @@ export default function Cart() {
                                     : null;
 
                                 return (
-                                    <Stack key={product._id} direction="row" spacing={2} alignItems="center" justifyContent="space-between">
-                                        <Box display="flex" flex={2}>
+                                    <Stack
+                                        key={product._id}
+                                        direction="row"
+                                        spacing={2}
+                                        alignItems="center"
+                                        sx={{
+                                            flexDirection: { xs: 'column', sm: 'row' },
+                                            alignItems: { xs: 'flex-start', sm: 'center' },
+                                        }}
+                                    >
+                                        <Box display="flex" flex={2} sx={{ width: { xs: '100%', sm: 'auto' } }}>
                                             <Box
                                                 component="img"
                                                 src={product.img[0]}
                                                 alt={product.title}
-                                                sx={{ width: 200, height: 'auto' }}
+                                                sx={{
+                                                    width: { xs: 120, sm: 200 },
+                                                    height: 'auto',
+                                                }}
                                             />
                                             <Box ml={2}>
-                                                <Typography>
+                                                <Typography variant="body1">
                                                     <b>{product.title}</b>
                                                 </Typography>
-                                                <Typography>
+                                                <Typography variant="body2">
                                                     <b>Color:</b> {product.color}
                                                 </Typography>
-                                                <Typography>
+                                                <Typography variant="body2">
                                                     <b>Size:</b> {product.size}
                                                 </Typography>
                                             </Box>
                                         </Box>
-                                        <Box flex={1} textAlign="center">
-                                            <Stack direction="row" alignItems="center" justifyContent="center" spacing={1}>
-                                                <IconButton>
-                                                    <Add />
-                                                </IconButton>
-                                                <Typography>{product.quantity}</Typography>
-                                                <IconButton>
-                                                    <Remove />
-                                                </IconButton>
+                                        <Box
+                                            flex={1}
+                                            sx={{
+                                                mt: { xs: 1, sm: 0 },
+                                                display: 'flex',
+                                                flexDirection: 'column',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                            }}
+                                        >
+                                            <Stack
+                                                direction="row"
+                                                alignItems="center"
+                                                justifyContent="center"
+                                                spacing={2}
+                                                sx={{
+                                                    flexDirection: { xs: 'row', sm: 'column' },
+                                                    justifyContent: { xs: 'space-between', sm: 'center' },
+                                                    width: '100%',
+                                                    marginTop: { xs: '10px', sm: '0' },
+                                                }}
+                                            >
+                                                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                                    <IconButton sx={{ fontSize: { xs: '1rem', sm: '1.5rem' } }}>
+                                                        <Add />
+                                                    </IconButton>
+                                                    <Typography variant="body1">{product.quantity}</Typography>
+                                                    <IconButton sx={{ fontSize: { xs: '1rem', sm: '1.5rem' } }}>
+                                                        <Remove />
+                                                    </IconButton>
+                                                </Box>
+                                                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                                    {salePrice ? (
+                                                        <Stack direction="row" justifyContent="center" spacing={1}>
+                                                            <Typography
+                                                                variant="h6"
+                                                                sx={{ textDecoration: 'line-through' }}
+                                                            >
+                                                                ${product.price * product.quantity}
+                                                            </Typography>
+                                                            <Typography variant="h6" color="teal">
+                                                                ${salePrice * product.quantity}
+                                                            </Typography>
+                                                        </Stack>
+                                                    ) : (
+                                                        <Typography variant="h6">${product.price * product.quantity}</Typography>
+                                                    )}
+                                                </Box>
+                                                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                                                    <IconButton
+                                                        onClick={() => handleRemove(product._id)}
+                                                        sx={{ fontSize: { xs: '1.5rem', sm: '2rem' }, marginLeft: { xs: 0, sm: 2 } }}
+                                                    >
+                                                        <Delete />
+                                                    </IconButton>
+                                                </Box>
                                             </Stack>
-                                            {salePrice ? (
-                                                <Stack direction="row" justifyContent="center" spacing={1}>
-                                                    <Typography variant="h6" sx={{ textDecoration: 'line-through' }}>${product.price * product.quantity}</Typography>
-                                                    <Typography variant="h6" color="teal">${salePrice * product.quantity}</Typography>
-                                                </Stack>
-                                            ) : (
-                                                <Typography variant="h6">${product.price * product.quantity}</Typography>
-                                            )}
                                         </Box>
-                                        <IconButton onClick={() => handleRemove(product._id)}>
-                                            <Delete />
-                                        </IconButton>
                                     </Stack>
                                 );
                             })}
@@ -182,4 +224,3 @@ export default function Cart() {
     );
 
 };
-
