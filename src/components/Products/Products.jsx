@@ -3,8 +3,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Product } from "../Product/Product";
 import { Button, Stack, Skeleton } from "@mui/material";
-import { useSelector, useDispatch } from "react-redux";
-import { setLoading, setProducts, setFilteredProducts, setError } from "../../redux/slices/productsRedux";
 
 export function Products({ cat, filters, sort }) {
   const [products, setProducts] = useState([]);
@@ -81,9 +79,7 @@ export function Products({ cat, filters, sort }) {
     }
   };
 
-  const isLoadMoreDisabled = cat
-    ? filteredProducts.length >= totalCount
-    : products.length >= totalCount;
+  const isLoadMoreDisabled = filteredProducts.length <= limit || loadingMore;
 
   return (
     <Stack
