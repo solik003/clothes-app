@@ -72,7 +72,7 @@ export function Login() {
           <Link href="#" variant="body2" sx={{ display: 'block', marginTop: 1 }}>
             Do not you remember the password?
           </Link>
-          <Link href="#" variant="body2">
+          <Link href="/register" variant="body2">
             Create a new account
           </Link>
         </Stack>
