@@ -8,19 +8,20 @@ import { useSelector, useDispatch } from 'react-redux';
 import StripeCheckout from 'react-stripe-checkout';
 import { userRequest } from '../../requestMethods';
 import { useNavigate } from 'react-router-dom';
-import { removeProduct } from '../../redux/cartRedux';
-import { Box, Button, Typography, Stack, Divider,Grid, IconButton } from '@mui/material';
-// import Grid from '@mui/material/Unstable_Grid2';
+import { removeProduct } from '../../redux/slices/cartRedux';
+import { Box, Button, Typography, Stack, Divider, Grid, IconButton } from '@mui/material';
+import { getCart } from '../../redux/selectors/cartSelectors';
+
 import Grid2 from '@mui/material/Grid2';
 
 const KEY = process.env.REACT_APP_STRIPE;
 
 export default function Cart() {
-    const cart = useSelector((state) => state.cart);
+    const cart = useSelector(getCart);
     const [stripeToken, setStripeToken] = useState(null);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    
+
     const onToken = (token) => {
         setStripeToken(token);
     };
@@ -50,7 +51,7 @@ export default function Cart() {
 
     const calculateTotal = () => {
         return cart.products.reduce((total, product) => {
-            const salePrice = product.salePercentage 
+            const salePrice = product.salePercentage
                 ? product.price * (1 - product.salePercentage / 100)
                 : product.price;
             return total + salePrice * product.quantity;
@@ -62,8 +63,8 @@ export default function Cart() {
 
     return (
         <Box>
-            <Navbar />
             <Announcement />
+            <Navbar />
             <Box p={2}>
                 <Typography variant="h4" textAlign="center" fontWeight="300" gutterBottom>
                     Your bag
@@ -76,7 +77,7 @@ export default function Cart() {
                         <Typography>Shopping Bag ({totalItems})</Typography>
                         <Typography>Your Wishlist ({totalItems})</Typography>
                     </Stack>
-                    <Button variant="contained" size="large" color="primary" sx={{backgroundColor: 'teal'}}>
+                    <Button variant="contained" size="large" color="primary" sx={{ backgroundColor: 'teal' }}>
                         CHECKOUT NOW
                     </Button>
                 </Stack>
@@ -84,7 +85,7 @@ export default function Cart() {
                     <Grid item xs={12} md={8}>
                         <Stack spacing={3} divider={<Divider flexItem />}>
                             {cart.products.map((product) => {
-                                const salePrice = product.salePercentage 
+                                const salePrice = product.salePercentage
                                     ? (product.price * (1 - product.salePercentage / 100)).toFixed(2)
                                     : null;
 
@@ -168,7 +169,7 @@ export default function Cart() {
                                 token={onToken}
                                 stripeKey={KEY}
                             >
-                                <Button variant="contained" color="primary" fullWidth sx={{ mt: 2}}>
+                                <Button variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>
                                     CHECKOUT NOW
                                 </Button>
                             </StripeCheckout>
@@ -179,5 +180,6 @@ export default function Cart() {
             <Footer />
         </Box>
     );
+
 };
 

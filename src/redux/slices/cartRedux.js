@@ -110,10 +110,9 @@ const cartSlice = createSlice({
       if (state.favorites.length === 0) {
         state.favoritesCount = 0;
       }
-
-    }
+    },
   },
 });
 
-export const { addProduct, removeProduct, addFavorite, removeFavorite } = cartSlice.actions;
+export const { addProduct, removeProduct, addFavorite, removeFavorite} = cartSlice.actions;
 export default cartSlice.reducer;

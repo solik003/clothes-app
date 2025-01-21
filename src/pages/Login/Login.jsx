@@ -2,12 +2,13 @@ import React, { useState } from 'react'
 import { login } from "../../redux/apiCalls";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Button, TextField, Typography, Link, Stack } from "@mui/material";
+import { getUserStatus } from '../../redux/selectors/userSelectors';
 
-export function Login () {
+export function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const { isFetching, error } = useSelector((state) => state.user);
+  const { isFetching, error } = useSelector(getUserStatus);
 
   const handleClick = (e) => {
     e.preventDefault();

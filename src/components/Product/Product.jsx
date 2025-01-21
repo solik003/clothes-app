@@ -9,7 +9,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { FavoriteBorderOutlined, SearchOutlined, ShoppingCartOutlined, Favorite, DeleteOutline } from '@mui/icons-material';
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addFavorite, removeFavorite, removeProduct } from '../../redux/cartRedux';
+import { addFavorite, removeFavorite, removeProduct } from '../../redux/slices/cartRedux';
 import { Typography, Stack } from '@mui/material';
 
 export function Product({ item, isFavoritePage }) {

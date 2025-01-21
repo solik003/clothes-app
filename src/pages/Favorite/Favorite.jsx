@@ -7,10 +7,11 @@ import { useSelector } from 'react-redux';
 import { Box, Button, Typography, Stack, Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { Product } from '../../components/Product/Product';
+import { getFavorites } from '../../redux/selectors/cartSelectors';
 
 
 export default function Favorite() {
-    const favorites = useSelector((state) => state.cart.favorites);
+    const favorites = useSelector(getFavorites);
     const navigate = useNavigate();
 
     const handleClick = () => {

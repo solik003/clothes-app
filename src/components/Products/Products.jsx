@@ -4,7 +4,7 @@ import axios from "axios";
 import { Product } from "../Product/Product";
 import { Button, Stack, Skeleton } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { setLoading, setProducts, setFilteredProducts, setError } from "../../redux/productsRedux";
+import { setLoading, setProducts, setFilteredProducts, setError } from "../../redux/slices/productsRedux";
 
 export function Products({ cat, filters, sort }) {
   const [products, setProducts] = useState([]);
@@ -128,7 +128,7 @@ export function Products({ cat, filters, sort }) {
           sx={{ mt: 2 }}
           disabled={isLoadMoreDisabled}
         >
-          {isLoadMoreDisabled ? "No More Products" : "Load More"}
+          {loadingMore ? "No More Products" : "Load More"}
         </Button>
       )}
     </Stack>

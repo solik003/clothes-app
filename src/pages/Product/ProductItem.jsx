@@ -1,11 +1,11 @@
 
 import React, { useEffect, useState } from 'react';
-import {Navbar} from "../../components/Navbar/Navbar";
+import { Navbar } from "../../components/Navbar/Navbar";
 import { Announcement } from "../../components/Announcement/Announcement";
 import { Add, Remove } from "@mui/icons-material";
 import { publicRequest } from '../../requestMethods';
 import { useLocation } from 'react-router-dom';
-import { addProduct } from '../../redux/cartRedux';
+import { addProduct } from '../../redux/slices/cartRedux';
 import { useDispatch } from "react-redux";
 import { Card, CardContent, Typography, CardActions, Button, Select, MenuItem, IconButton, Box, Stack } from '@mui/material';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -49,7 +49,7 @@ export function ProductItem() {
     );
   };
 
-  const salePrice = product.salePercentage 
+  const salePrice = product.salePercentage
     ? (product.price * (1 - product.salePercentage / 100)).toFixed(2)
     : null;
 
@@ -57,7 +57,7 @@ export function ProductItem() {
     <Stack direction='column'>
       <Announcement />
       <Navbar />
-      
+
       <Card sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, p: 2, border: '1px solid #ccc' }}>
         <Box sx={{ width: { xs: '100%', md: '50%' }, pr: 2 }}>
           <Swiper
@@ -101,12 +101,12 @@ export function ProductItem() {
                   <Typography variant="h5" sx={{ fontWeight: 'bold', color: 'primary.main', fontSize: '1.5rem' }}>
                     ${salePrice}
                   </Typography>
-                  <Stack 
+                  <Stack
                     sx={{
                       backgroundColor: 'red',
                       color: 'white',
                       borderRadius: 2,
-                      px: 2, 
+                      px: 2,
                       py: 1,
                       ml: 2,
                       fontSize: '1.1rem',
@@ -154,7 +154,7 @@ export function ProductItem() {
             </Box>
           </CardContent>
           <CardActions sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-            <Stack direction='row' gap={1} sx={{ alignItems: 'center'}}>
+            <Stack direction='row' gap={1} sx={{ alignItems: 'center' }}>
               <IconButton onClick={() => handleQuantity('dec')}>
                 <Remove />
               </IconButton>

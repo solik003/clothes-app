@@ -2,7 +2,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Navigate 
+  Navigate
 } from "react-router-dom";
 import Home from './pages/Home';
 import { ProductList } from "./pages/ProductList/ProductList";
@@ -15,10 +15,10 @@ import Favorite from "./pages/Favorite/Favorite";
 import { useSelector } from "react-redux";
 import FilteredProducts from "./pages/FilteredProducts/FilteredProducts";
 import { Terms } from "./pages/Terms/Terms";
-
+import { getUser } from "./redux/selectors/userSelectors";
 
 function App() {
-  const user = useSelector(state => state.user.currentUser );
+  const user = useSelector(getUser);
 
   return (
     <Router>
