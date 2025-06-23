@@ -7,6 +7,8 @@ import { FavoriteBorderOutlined } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
 import { getQuantity, getFavoriteCount } from '../../redux/selectors/cartSelectors';
 import { getProducts } from '../../redux/selectors/productsSelectors';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 export function Navbar() {
   const quantity = useSelector(getQuantity);
@@ -15,6 +17,9 @@ export function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
   const products = useSelector(getProducts);
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
@@ -33,39 +38,22 @@ export function Navbar() {
 
   return (
     <Stack
-      direction='row'
-      sx={{
-        padding: '10px 20px',
-        '@media (max-width: 600px)': {
-          padding: '10px 10px',
-          flexDirection: 'column',
-          alignItems: 'center',
-        },
-      }}
+      direction={isMobile ? 'column' : 'row'}
+      padding={isMobile ? '10px 10px' : '10px 20px'}
+      alignItems={isMobile ? 'center' : 'stretch'}
     >
       <Stack
-        direction='row'
-        sx={{
-          width: '100%',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          '@media (max-width: 600px)': {
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: 1,
-          },
-        }}
+        direction={isMobile ? 'column' : 'row'}
+        alignItems="center"
+        width="100%"
+        justifyContent='space-between'
+        spacing={isMobile ? 1 : 0}
       >
         <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
           <Typography
             component="h1"
-            sx={{
-              fontWeight: 'bold',
-              fontSize: '1.8rem',
-              '@media (max-width: 600px)': {
-                fontSize: '1.4rem',
-              },
-            }}
+            fontWeight="bold"
+            fontSize={isMobile ? '1.4rem' : '1.8rem'}
           >
             ChillFit.
           </Typography>
@@ -73,26 +61,20 @@ export function Navbar() {
 
         <Stack
           direction='row'
-          sx={{
-            alignItems: 'center',
-            border: '0.5px solid lightgray',
-            borderRadius: '20px',
-            padding: '5px 10px',
-            width: '100%',
-            maxWidth: 300,
-            '@media (max-width: 600px)': {
-              marginTop: '10px',
-            },
-          }}
+          alignItems="center"
+          border="0.5px solid lightgray"
+          borderRadius="20px"
+          padding="5px 10px"
+          width="100%"
+          maxWidth={300}
+          marginTop={isMobile ? '10px' : 0}
         >
           <InputBase
             placeholder="Search"
             value={searchQuery}
             onChange={handleChange}
-            sx={{
-              flex: 1,
-              fontSize: '0.9rem',
-            }}
+            fullWidth
+            inputProps={{ style: { fontSize: '0.9rem' } }}
           />
           <Search
             sx={{
@@ -105,29 +87,20 @@ export function Navbar() {
 
       <Stack
         direction="row"
+        spacing={2}
         gap={2}
-        sx={{
-          width: '100%',
-          justifyContent: 'flex-end',
-          alignItems: 'center',
-          marginTop: '10px',
-          '@media (max-width: 600px)': {
-            flexWrap: 'wrap',
-            gap: 1.5,
-            justifyContent: 'center',
-          },
-        }}
+        width='100%'
+        alignItems='center'
+        marginTop='10px'
+        flexWrap={isMobile ? 'wrap' : 'nowrap'}
+        justifyContent={isMobile ? 'center' : 'flex-end'}
       >
         <Link to="/register" style={{ textDecoration: 'none' }}>
           <Button
             variant="outlined"
+            size='small'
             sx={{
-              fontSize: '0.875rem',
-              padding: '5px 10px',
-              borderRadius: '20px',
-              '@media (max-width: 600px)': {
-                fontSize: '0.75rem',
-              },
+              borderRadius: '20px'
             }}
           >
             Register
@@ -136,13 +109,9 @@ export function Navbar() {
         <Link to="/login" style={{ textDecoration: 'none' }}>
           <Button
             variant="outlined"
+            size="small"
             sx={{
-              fontSize: '0.875rem',
-              padding: '5px 10px',
-              borderRadius: '20px',
-              '@media (max-width: 600px)': {
-                fontSize: '0.75rem',
-              },
+              borderRadius: '20px'
             }}
           >
             Sign In
@@ -153,11 +122,8 @@ export function Navbar() {
           <Badge badgeContent={quantity} color="primary">
             <ShoppingCartOutlined
               sx={{
-                fontSize: '1.8rem',
+                fontSize: isMobile ? '1.4rem' : '1.8rem',
                 cursor: 'pointer',
-                '@media (max-width: 600px)': {
-                  fontSize: '1.4rem',
-                },
               }}
             />
           </Badge>
@@ -166,11 +132,8 @@ export function Navbar() {
           <Badge badgeContent={favoriteCount} color="primary">
             <FavoriteBorderOutlined
               sx={{
-                fontSize: '1.8rem',
-                cursor: 'pointer',
-                '@media (max-width: 600px)': {
-                  fontSize: '1.4rem',
-                },
+                fontSize: isMobile ? '1.4rem' : '1.8rem',
+                cursor: 'pointer'
               }}
             />
           </Badge>

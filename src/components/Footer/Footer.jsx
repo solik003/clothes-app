@@ -24,21 +24,19 @@ const usefulLinks = [
 export function Footer() {
   return (
     <Stack
-    spacing={2}
+      spacing={2}
+      flexDirection={{ xs: 'column', sm: 'row' }}
       sx={{
-        flexDirection: { xs: 'column', sm: 'row' },
         backgroundColor: '#f5f5f5',
       }}
     >
       {/* Left Section */}
       <Stack
         direction="column"
-        sx={{
-          flex: 2,
-          p: 2,
-        }}
+        flex={2}
+        padding={2}
       >
-        <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold'}}>
+        <Typography variant="h5" gutterBottom sx={{ fontWeight: 'bold' }}>
           ChillFit.
         </Typography>
         <Typography variant="body2" gutterBottom>
@@ -51,11 +49,9 @@ export function Footer() {
 
       {/* Center Section */}
       <Stack
-        sx={{
-          flex: 3,
-          p: 2,
-          display: { xs: 'none', sm: 'block' },
-        }}
+        flex={3}
+        padding={2}
+        display={{ xs: 'none', sm: 'block' }}
       >
         <Typography variant="h6" gutterBottom >
           Useful Links
@@ -73,7 +69,7 @@ export function Footer() {
             <ListItem
               key={index}
               disablePadding
-              sx={{ width: '50%', mb: 1}}
+              sx={{ width: '50%', mb: 1 }}
             >
               <Link to={item.path} style={{ textDecoration: 'none', color: 'inherit' }}>
                 <Typography variant="body2">{item.name}</Typography>
@@ -85,9 +81,9 @@ export function Footer() {
 
       {/* Right Section */}
       <Box
+        flex={1}
+        padding={2}
         sx={{
-          flex: 1,
-          p: 2,
           backgroundColor: { xs: '#fff8f8', sm: 'transparent' },
         }}
       >
@@ -95,19 +91,19 @@ export function Footer() {
           Contact
         </Typography>
         <Stack
-          direction="row" 
+          direction="row"
           gap={2}
           mb={2}
-          sx={{ alignItems: 'center'}}
+          alignItems="center"
         >
           <Room />
           <Typography variant="body2">Ukraine, Lviv</Typography>
         </Stack>
         <Stack
-          direction="row" 
+          direction="row"
           gap={2}
           mb={2}
-          sx={{ alignItems: 'center'}}
+          alignItems="center"
         >
           <Phone />
           <Typography variant="body2">+380</Typography>
@@ -116,8 +112,7 @@ export function Footer() {
           direction="row"
           gap={2}
           mb={2}
-
-          sx={{ alignItems: 'center' }}
+          alignItems="center"
         >
           <MailOutline />
           <Typography variant="body2">contact@avenue.dev</Typography>
@@ -127,10 +122,10 @@ export function Footer() {
           <IconButton sx={{ color: '#E4405F' }}>
             <Instagram />
           </IconButton>
-          <IconButton sx={{ color: '#3B5999'}}>
+          <IconButton sx={{ color: '#3B5999' }}>
             <Facebook />
           </IconButton>
-          <IconButton sx={{ color: '#E60023'}}>
+          <IconButton sx={{ color: '#E60023' }}>
             <Pinterest />
           </IconButton>
         </Stack>

@@ -59,7 +59,7 @@ export function ProductItem() {
       <Navbar />
 
       <Card sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, p: 2, border: '1px solid #ccc' }}>
-        <Box sx={{ width: { xs: '100%', md: '50%' }, pr: 2 }}>
+        <Box width={window.innerWidth < 900 ? '100%' : '50%'} pr={2}>
           <Swiper
             modules={[Navigation, Pagination, Autoplay]}
             navigation
@@ -74,9 +74,9 @@ export function ProductItem() {
                   component="img"
                   src={image}
                   alt={`${product.title} image ${index + 1}`}
+                  width="100%"
+                  height="100%"
                   sx={{
-                    width: '100%',
-                    height: '100%',
                     objectFit: 'contain',
                   }}
                 />
@@ -84,15 +84,15 @@ export function ProductItem() {
             ))}
           </Swiper>
         </Box>
-        <Box sx={{ flex: 1 }}>
+        <Box flex={1}>
           <CardContent>
-            <Typography variant="h4" component="div" sx={{ fontWeight: 'bold' }}>
+            <Typography variant="h4" component="div" fontWeight="bold">
               {product.title}
             </Typography>
             <Typography variant="body1" sx={{ margin: '20px 0' }}>
               {product.desc}
             </Typography>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Box display="flex" alignItems="center">
               {salePrice ? (
                 <>
                   <Typography variant="h6" sx={{ textDecoration: 'line-through', color: 'text.secondary', mr: 1 }}>
@@ -102,6 +102,8 @@ export function ProductItem() {
                     ${salePrice}
                   </Typography>
                   <Stack
+                    direction="row"
+                    alignItems="center"
                     sx={{
                       backgroundColor: 'red',
                       color: 'white',
@@ -110,15 +112,14 @@ export function ProductItem() {
                       py: 1,
                       ml: 2,
                       fontSize: '1.1rem',
-                      fontWeight: 'bold',
-                      alignItems: 'center',
+                      fontWeight: 'bold'
                     }}
                   >
                     {product.salePercentage}% OFF
                   </Stack>
                 </>
               ) : (
-                <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
+                <Typography variant="h5" fontWeight="bold">
                   ${product.price}
                 </Typography>
               )}

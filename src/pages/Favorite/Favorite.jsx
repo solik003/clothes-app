@@ -19,10 +19,10 @@ export default function Favorite() {
     };
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+        <Box display="flex" flexDirection="column" minHeight="100vh">
             <Announcement />
             <Navbar />
-            <Box p={2} sx={{ flex: 1 }}>
+            <Box p={2} flex={1}>
                 <Typography variant="h4" textAlign="center" fontWeight="300" gutterBottom>
                     My Wishlist
                 </Typography>

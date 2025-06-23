@@ -5,7 +5,7 @@ import { Box, Typography, Button as MuiButton, CardMedia, Card } from "@mui/mate
 
 export default function CategoryItem({ item }) {
     return (
-        <Card 
+        <Card
             sx={{
                 flex: 1,
                 margin: 1,
@@ -22,9 +22,9 @@ export default function CategoryItem({ item }) {
                     component="img"
                     alt={item.title}
                     image={item.img}
+                    width="100%"
+                    height="100%"
                     sx={{
-                        width: '100%',
-                        height: '100%',
                         objectFit: 'cover',
                         '@media (max-width: 600px)': {
                             height: '20vh',
@@ -32,26 +32,22 @@ export default function CategoryItem({ item }) {
                     }}
                 />
                 <Box
-                    sx={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        width: '100%',
-                        height: '100%',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        background: 'rgba(0, 0, 0, 0.5)',
-                    }}
+                    position="absolute"
+                    top={0}
+                    left={0}
+                    width="100%"
+                    height="100%"
+                    display="flex"
+                    flexDirection="column"
+                    alignItems="center"
+                    justifyContent="center"
+                    bgcolor="rgba(0,0,0,0.5)"
                 >
                     <Typography
                         variant="h4"
-                        sx={{
-                            color: 'white',
-                            marginBottom: 2,
-                            textAlign: 'center',
-                        }}
+                        color='white'
+                        mb={2}
+                        textAlign="center"
                     >
                         {item.title}
                     </Typography>

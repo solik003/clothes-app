@@ -1,46 +1,44 @@
 
 import React from 'react';
 import { Send } from '@mui/icons-material';
-import { Typography, TextField, Button, Stack } from '@mui/material';
+import { Typography, TextField, Button, Stack, useTheme, useMediaQuery } from '@mui/material';
 
 export function Newsletter() {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   return (
     <Stack
       gap={2}
       direction='column'
+      alignItems='center'
+      justifyContent='center'
+      height='60vh'
       sx={{
-        height: '60vh',
         backgroundColor: '#fcf5f5',
-        alignItems: 'center',
-        justifyContent: 'center',
       }}
     >
       <Typography
         variant="h4"
         gutterBottom
         align='center'
-        sx={{
-          fontSize: { xs: 28, sm: 48 },
-        }}
+        fontSize={isMobile ? 28 : 48}
       >
         Stay in touch with Us!
       </Typography>
       <Typography
         variant="body1"
         gutterBottom
-        sx={{
-          fontSize: { xs: 18, sm: 22 },
-          fontWeight: 300,
-          textAlign: { xs: 'center', sm: 'left' },
-        }}
+        fontWeight={300}
+        align={isMobile ? 'center' : 'left'}
+        fontSize={isMobile ? 18 : 22}
       >
         Get timely updates from your favorite products.
       </Typography>
       <Stack
         direction='row'
+        alignItems='center'
+        width={isMobile ? '80%' : '50%'}
         sx={{
-          width: { xs: '80%', sm: '50%' },
-          alignItems: 'center',
           border: '1px solid lightgray',
           backgroundColor: 'white',
         }}

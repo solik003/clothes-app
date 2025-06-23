@@ -16,29 +16,24 @@ export function Login() {
   };
   return (
     <Stack
+      width="100vw"
+      height="100vh"
+      alignItems="center"
+      justifyContent="center"
       sx={{
-        width: '100vw',
-        height: '100vh',
         background: `linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url("https://images.pexels.com/photos/6984661/pexels-photo-6984661.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940") center`,
-        backgroundSize: 'cover',
-        alignItems: 'center',
-        justifyContent: 'center',
+        backgroundSize: 'cover'
       }}
     >
       <Stack
-        sx={{
-          width: '25%',
-          padding: '20px',
-          backgroundColor: 'white',
-          '@media (max-width: 600px)': {
-            width: '75%',
-          },
-        }}
+        width={{ xs: '75%', sm: '25%' }}
+        padding={3}
+        bgcolor="white"
       >
-        <Typography variant="h4" sx={{ fontWeight: 300, fontSize: '24px' }}>
+        <Typography variant="h4" fontWeight={300} fontSize="24px">
           Sign in
         </Typography>
-        <Stack direction='column' sx={{ marginTop: 2 }}>
+        <Stack direction='column' mt={2}>
           <TextField
             label="Username"
             variant="outlined"
@@ -65,11 +60,11 @@ export function Login() {
             Login
           </Button>
           {error && (
-            <Typography color='error' sx={{ fontSize: '14px', marginTop: 1 }}>
+            <Typography color='error' fontSize="14px" mt={1}>
               Something went wrong...
             </Typography>
           )}
-          <Link href="#" variant="body2" sx={{ display: 'block', marginTop: 1 }}>
+          <Link href="#" variant="body2"  display="block" mt={1}>
             Do not you remember the password?
           </Link>
           <Link href="/register" variant="body2">

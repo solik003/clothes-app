@@ -8,13 +8,11 @@ export function Announcement() {
       direction="row"
       alignItems="center"
       justifyContent="center"
-      sx={{
-        height: '30px',
-        backgroundColor: 'teal',
-        color: 'white',
-        fontSize: '14px',
-        fontWeight: 500,
-      }}
+      height={30}
+      bgcolor="teal"
+      color="white"
+      fontSize={14}
+      fontWeight={500}
     >
       Super Deal! Free Shipping on Orders Over $50
     </Stack>

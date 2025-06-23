@@ -37,19 +37,19 @@ export function Terms() {
   return (
     <Box p={2} sx={{ maxWidth: '1200px', mx: 'auto' }}>
       <Paper elevation={3} sx={{ p: 2 }}>
-        <Typography variant="h4" sx={{ fontWeight: 'bold', mb: 2 }}>
+        <Typography variant="h4" fontWeight="bold" marginBottom={2}>
           Terms and Conditions
         </Typography>
         {sections.map((section, index) => (
-          <Box key={index} sx={{ mb: 2 }}>
-            <Typography variant="h6" sx={{ mb: 1 }}>
+          <Box key={index} marginBottom={2}>
+            <Typography variant="h6" marginBottom={1}>
               {section.title}
             </Typography>
             <Typography variant="body1">{section.content}</Typography>
             {index < sections.length - 1 && <Divider sx={{ my: 2 }} />}
           </Box>
         ))}
-        <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
+        <Box display="flex" justifyContent="flex-start">
           <Button variant="contained" color="primary" sx={{ py: 1.25, px: 2.5 }}>
             I Agree
           </Button>

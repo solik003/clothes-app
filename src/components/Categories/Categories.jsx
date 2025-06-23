@@ -21,7 +21,7 @@ export function Categories() {
 
 
   return (
-    <Box sx={{ width: "100%", p: 2 }}>
+    <Box width="100%" p={2}>
       <CategoryTabs
         categories={categories}
         activeTab={activeTab}
@@ -31,10 +31,8 @@ export function Categories() {
       <Stack
         direction={{ xs: "column", sm: "row" }}
         gap={{ xs: 0, sm: 2 }}
-        sx={{
-          justifyContent: "space-between",
-          flexWrap: "wrap",
-        }}
+        justifyContent = "space-between"
+        flexWrap = "wrap"
       >
         {topCategories.map((item) => (
           <CategoryItem item={item} key={item.id} />

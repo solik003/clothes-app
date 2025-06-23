@@ -86,21 +86,17 @@ export default function Cart() {
                                 return (
                                     <Stack
                                         key={product._id}
-                                        direction="row"
+                                        direction={{ xs: 'column', sm: 'row' }}
                                         spacing={2}
-                                        alignItems="center"
-                                        sx={{
-                                            flexDirection: { xs: 'column', sm: 'row' },
-                                            alignItems: { xs: 'flex-start', sm: 'center' },
-                                        }}
+                                        alignItems={{ xs: 'flex-start', sm: 'center' }}
                                     >
                                         <Box display="flex" flex={2} sx={{ width: { xs: '100%', sm: 'auto' } }}>
                                             <Box
                                                 component="img"
                                                 src={product.img[0]}
                                                 alt={product.title}
+                                                width={{xs: 120, sm: 200}}
                                                 sx={{
-                                                    width: { xs: 120, sm: 200 },
                                                     height: 'auto',
                                                 }}
                                             />
@@ -118,27 +114,21 @@ export default function Cart() {
                                         </Box>
                                         <Box
                                             flex={1}
-                                            sx={{
-                                                mt: { xs: 1, sm: 0 },
-                                                display: 'flex',
-                                                flexDirection: 'column',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                            }}
+                                            marginTop={{ xs: 1, sm: 0 }}
+                                            display="flex"
+                                            flexDirection="column"
+                                            alignItems="center"
+                                            justifyContent="center"
                                         >
-                                            <Stack
-                                                direction="row"
+                                            <Stack   
+                                                direction={{ xs: 'row', sm: 'column' }}
                                                 alignItems="center"
-                                                justifyContent="center"
-                                                spacing={2}
-                                                sx={{
-                                                    flexDirection: { xs: 'row', sm: 'column' },
-                                                    justifyContent: { xs: 'space-between', sm: 'center' },
-                                                    width: '100%',
-                                                    marginTop: { xs: '10px', sm: '0' },
-                                                }}
+                                                justifyContent={{ xs: 'space-between', sm: 'center' }}
+                                                width='100%'
+                                                marginTop={{xs: '10px', sm: '0'}}
+
                                             >
-                                                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                                <Box display="flex" alignItems="center">
                                                     <IconButton sx={{ fontSize: { xs: '1rem', sm: '1.5rem' } }}>
                                                         <Add />
                                                     </IconButton>
@@ -147,7 +137,7 @@ export default function Cart() {
                                                         <Remove />
                                                     </IconButton>
                                                 </Box>
-                                                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                                <Box display="flex" justifyContent="center" alignItems="center">
                                                     {salePrice ? (
                                                         <Stack direction="row" justifyContent="center" spacing={1}>
                                                             <Typography
@@ -164,7 +154,7 @@ export default function Cart() {
                                                         <Typography variant="h6">${product.price * product.quantity}</Typography>
                                                     )}
                                                 </Box>
-                                                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                                                <Box display="flex" justifyContent="center">
                                                     <IconButton
                                                         onClick={() => handleRemove(product._id)}
                                                         sx={{ fontSize: { xs: '1.5rem', sm: '2rem' }, marginLeft: { xs: 0, sm: 2 } }}
