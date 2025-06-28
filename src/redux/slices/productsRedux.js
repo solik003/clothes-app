@@ -1,13 +1,15 @@
-// redux/productsRedux.js
-import { createSlice } from '@reduxjs/toolkit';
+
+import { createSlice } from "@reduxjs/toolkit";
 
 const productsSlice = createSlice({
-  name: 'products',
+  name: "products",
   initialState: {
     products: [],
     filteredProducts: [],
+    filters: { category: [], title: "" },
     loading: false,
     error: null,
+    sort: 'newest',
   },
   reducers: {
     setLoading: (state, action) => {
@@ -15,16 +17,27 @@ const productsSlice = createSlice({
     },
     setProducts: (state, action) => {
       state.products = action.payload;
+      state.filteredProducts = [];
     },
-    setFilteredProducts: (state, action) => {
+    setFilteredProducts(state, action) {
       state.filteredProducts = action.payload;
     },
-    setError: (state, action) => {
-      state.error = action.payload;
+    setFilters: (state, action) => {
+      state.filters = action.payload;
+      state.filteredProducts = state.products.filter((item) =>
+        Object.entries(state.filters).every(([key, value]) =>
+          item[key] && item[key].toLowerCase().includes(value.toLowerCase())
+        )
+      );
     },
+
+    setSort: (state, action) => {
+      state.sort = action.payload;
+    }
   },
 });
 
-export const { setLoading, setProducts, setFilteredProducts, setError } = productsSlice.actions;
+export const { setLoading, setProducts, setFilters, setError, setSort, setFilteredProducts } =
+  productsSlice.actions;
 
 export default productsSlice.reducer;
