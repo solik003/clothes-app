@@ -4,8 +4,6 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-
-//REGISTER
 router.post("/register", async (req, res) => {
   try {
       if (!req.body.username || !req.body.email || !req.body.password) {
@@ -34,7 +32,6 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// LOGIN
 router.post("/login", async (req, res) => {
   try {
       const user = await User.findOne({ username: req.body.username });

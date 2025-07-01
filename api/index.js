@@ -12,11 +12,11 @@ const stripeRoute = require("./routes/stripe");
 const cors = require("cors");
 
 mongoose
-    .connect('mongodb+srv://solomiia451:6mbDvW_V5qu3ZJJ@cluster0.pvp3c.mongodb.net/shop?retryWrites=true&w=majority')
+    .connect(process.env.MONGO_URL)
     .then(() => console.log("DB connection successful!"))
-    .catch((err)=> {
+    .catch((err) => {
         console.log(err);
-});
+    });
 
 app.use(cors());
 app.use(express.json());
