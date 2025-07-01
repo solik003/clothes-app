@@ -6,7 +6,6 @@ const productsSlice = createSlice({
   initialState: {
     products: [],
     filteredProducts: [],
-    filters: { category: [], title: "" },
     loading: false,
     error: null,
     sort: 'newest',
@@ -19,25 +18,20 @@ const productsSlice = createSlice({
       state.products = action.payload;
       state.filteredProducts = [];
     },
-    setFilteredProducts(state, action) {
+    setFilteredProducts: (state, action) => {
       state.filteredProducts = action.payload;
     },
-    setFilters: (state, action) => {
-      state.filters = action.payload;
-      state.filteredProducts = state.products.filter((item) =>
-        Object.entries(state.filters).every(([key, value]) =>
-          item[key] && item[key].toLowerCase().includes(value.toLowerCase())
-        )
-      );
-    },
-
     setSort: (state, action) => {
       state.sort = action.payload;
     }
   },
 });
 
-export const { setLoading, setProducts, setFilters, setError, setSort, setFilteredProducts } =
-  productsSlice.actions;
+export const {
+  setLoading,
+  setProducts,
+  setFilteredProducts,
+  setSort,
+} = productsSlice.actions;
 
 export default productsSlice.reducer;
