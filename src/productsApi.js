@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:5000/api';
+// const BASE_URL = 'http://localhost:5000/api';
+const BASE_URL = 'https://clothes-app-api.onrender.com';
 
 export const fetchProducts = async (limit, cat) => {
     try {
@@ -11,6 +12,6 @@ export const fetchProducts = async (limit, cat) => {
         const response = await axios.get(url);
         return response.data;
     } catch (error) {
-        throw error; // Let the calling code handle the error
+        throw error;
     }
 };
