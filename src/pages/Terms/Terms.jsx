@@ -1,5 +1,5 @@
-import React from 'react';
-import { Box, Typography, Button, Divider, Paper } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, Typography, Button, Divider, Paper, Snackbar, Alert } from '@mui/material';
 
 const sections = [
   {
@@ -34,6 +34,15 @@ const sections = [
 ];
 
 export function Terms() {
+  const [open, setOpen] = useState(false);
+
+  const handleAgree = () => {
+    console.log("User agreed");
+    setOpen(true);
+  };
+
+  const handleClose = () => setOpen(false);
+
   return (
     <Box p={2} sx={{ maxWidth: '1200px', mx: 'auto' }}>
       <Paper elevation={3} sx={{ p: 2 }}>
@@ -50,13 +59,16 @@ export function Terms() {
           </Box>
         ))}
         <Box display="flex" justifyContent="flex-start">
-          <Button variant="contained" color="primary" sx={{ py: 1.25, px: 2.5 }}>
+          <Button variant="contained" color="primary" sx={{ py: 1.25, px: 2.5 }} onClick={handleAgree}>
             I Agree
           </Button>
         </Box>
+        <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+            Thank you for agreeing to the Terms!
+          </Alert>
+        </Snackbar>
       </Paper>
     </Box>
   );
 }
-
-
