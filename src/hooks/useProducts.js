@@ -23,7 +23,7 @@ export const useProducts = (queryParams) => {
     console.log(filteredProducts);
 
     const buildUrl = (params) => {
-        const url = new URL("https://clothes-app-api.onrender.com/products");
+        const url = new URL("https://clothes-app-api.onrender.com/api/products");
         Object.entries(params).forEach(([key, value]) => {
             if (value !== undefined && value !== "") {
                 url.searchParams.append(key, value);
