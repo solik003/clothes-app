@@ -1,9 +1,7 @@
 import React from 'react'
 
-const Success = () => {
+export default function Success() {
   return (
     <div>Success</div>
   )
 }
-
-export default Success
