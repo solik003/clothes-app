@@ -1,11 +1,9 @@
 import axios from 'axios';
-
-// const BASE_URL = 'http://localhost:5000/api';
-const BASE_URL = 'https://clothes-app-api.onrender.com/api';
+import { BASE_API_URL } from './config';
 
 export const fetchProducts = async (limit, cat) => {
     try {
-        let url = `${BASE_URL}/products?limit=${limit}`;
+        let url = `${BASE_API_URL}/products?limit=${limit}`;
         if (cat) {
             url += `&category=${cat}`;
         }
